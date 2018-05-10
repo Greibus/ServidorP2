@@ -1,10 +1,10 @@
 #include <iostream>
+<<<<<<< HEAD
 #include "Server/Servidor.h"
+=======
+>>>>>>> master
 
 int main() {
-    std::cout << "Iniciando Servidor" << std::endl;
-    Servidor servi=Servidor();
-    servi.iniciar();
+    std::cout << "Hello, World!" << std::endl;
     return 0;
 }
-
