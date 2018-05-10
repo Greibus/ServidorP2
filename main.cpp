@@ -1,10 +1,6 @@
 #include <iostream>
-#include "Servidor.h"
 
 int main() {
-    std::cout << "Iniciando Servidor" << std::endl;
-    Servidor servi=Servidor();
-    servi.iniciar();
+    std::cout << "Hello, World!" << std::endl;
     return 0;
 }
-
