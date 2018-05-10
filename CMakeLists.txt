@@ -4,4 +4,4 @@ project(ServidorP2)
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -pthread")
 
-add_executable(Servidor main.cpp Servidor.cpp Servidor.h)
+add_executable(Servidor main.cpp Server/Servidor.cpp Server/Servidor.h UserData/User.cpp UserData/User.h MusicManager/Genre.h)
