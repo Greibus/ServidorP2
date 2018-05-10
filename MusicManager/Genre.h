@@ -5,7 +5,7 @@
 #ifndef SERVIDORP2_GENRE_H
 #define SERVIDORP2_GENRE_H
 
-// Lista de los generos musicales que se van a usar para la clasificacion. 
+// Lista de los generos musicales que se van a usar para la clasificacion.
 
 enum {
     ROCK = 101,

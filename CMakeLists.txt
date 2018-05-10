@@ -5,14 +5,13 @@ set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -pthread")
 set(ServidorP2 ${CMAKE_PROJECT_NAME})
 
-<<<<<<< HEAD
-add_executable(Servidor main.cpp Server/Servidor.cpp Server/Servidor.h UserData/User.cpp UserData/User.h MusicManager/Genre.h)
-=======
-
 set(SOURCES
         main.cpp
-        Servidor.h
-        Servidor.cpp
+        Server/Servidor.cpp
+        Server/Servidor.h
+        UserData/User.cpp
+        UserData/User.h
+        MusicManager/Genre.h
         Trees/BTree.cpp
         Trees/BTree.h
         Trees/BinaryTree.cpp
@@ -27,4 +26,3 @@ set(SOURCES
         Sort/BubbleSort.h)
 
 add_executable(${CMAKE_PROJECT_NAME} ${SOURCES})
->>>>>>> master
