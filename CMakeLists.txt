@@ -12,6 +12,10 @@ set(SOURCES
         UserData/User.cpp
         UserData/User.h
         MusicManager/Genre.h
+        Trees/LinkedList.cpp
+        Trees/LinkedList.h
+        Trees/LLNode.cpp
+        Trees/LLNode.h
         Trees/BTree.cpp
         Trees/BTree.h
         Trees/BinaryTree.cpp

@@ -13,7 +13,7 @@ private:
     std::string name;
     std::string lastName;
     int age;
-    std::
+
 };
 
 

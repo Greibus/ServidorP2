@@ -1,10 +1,14 @@
 #include <iostream>
-<<<<<<< HEAD
 #include "Server/Servidor.h"
-=======
->>>>>>> master
+#include <string>
 
 int main() {
-    std::cout << "Hello, World!" << std::endl;
+//
+//    std::string a = "hola";
+//    std::string b = "adios";
+//    if (a == b) {
+//        std::cout << "yes" << std::endl;
+//    }
+
     return 0;
 }

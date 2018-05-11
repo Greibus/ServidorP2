@@ -3,22 +3,12 @@
 //
 
 #include "BTree.h"
-#include <iostream>
-using namespace std;
 
-#define MAX 4
-#define MIN 2
-
-struct btreeNode {
-    int val[MAX + 1], count;
-    btreeNode *link[MAX + 1];
-};
-
-btreeNode *roots;
 
 /* creating new node */
-btreeNode * createNode(int val, btreeNode *child) {
-    btreeNode *newNode = new btreeNode;
+template<class T>
+btreeNode<T> *BTree<T>::createNode(T val, btreeNode<T> *child) {
+    btreeNode<T> *newNode = new btreeNode<T>;
     newNode->val[1] = val;
     newNode->count = 1;
     newNode->link[0] = roots;
@@ -27,7 +17,8 @@ btreeNode * createNode(int val, btreeNode *child) {
 }
 
 /* Places the value in appropriate position */
-void addValToNode(int val, int pos, btreeNode *node, btreeNode *child) {
+template<class T>
+void BTree<T>::addValToNode(T val, int pos, btreeNode<T> *node, btreeNode<T> *child) {
     int j = node->count;
     while (j > pos) {
         node->val[j + 1] = node->val[j];
@@ -40,15 +31,18 @@ void addValToNode(int val, int pos, btreeNode *node, btreeNode *child) {
 }
 
 /* split the node */
-void splitNode(int val, int *pval, int pos, btreeNode *node,btreeNode *child, btreeNode **newNode) {
+template<class T>
+void BTree<T>::splitNode(T val, T *pval, int pos, btreeNode<T> *node,
+                         btreeNode<T> *child, btreeNode<T> **newNode) {
     int median, j;
 
-    if (pos > MIN)
+    if (pos > MIN) {
         median = MIN + 1;
-    else
+    } else {
         median = MIN;
+    }
 
-    *newNode = new btreeNode;
+    *newNode = new btreeNode<T>;
     j = median + 1;
     while (j <= MAX) {
         (*newNode)->val[j - median] = node->val[j];
@@ -70,7 +64,8 @@ void splitNode(int val, int *pval, int pos, btreeNode *node,btreeNode *child, bt
 }
 
 /* sets the value val in the node */
-int setValueInNode(int val, int *pval,btreeNode *node, btreeNode **child) {
+template<class T>
+int BTree<T>::setValueInNode(T val, T *pval,btreeNode<T> *node, btreeNode<T> **child) {
 
     int pos;
     if (!node) {
@@ -103,9 +98,10 @@ int setValueInNode(int val, int *pval,btreeNode *node, btreeNode **child) {
 }
 
 /* insert val in B-Tree */
-void insertion(int val) {
+template<class T>
+void BTree<T>::insertion(T val) {
     int flag, i;
-    btreeNode *child;
+    btreeNode<T> *child;
 
     flag = setValueInNode(val, &i, roots, &child);
     if (flag)
@@ -113,18 +109,19 @@ void insertion(int val) {
 }
 
 /* copy successor for the value to be deleted */
-void copySuccessor(btreeNode *myNode, int pos) {
-    btreeNode *dummy;
+template<class T>
+void BTree<T>::copySuccessor(btreeNode<T> *myNode, int pos) {
+    btreeNode<T> *dummy;
     dummy = myNode->link[pos];
 
     for (; dummy->link[0] != NULL;)
         dummy = dummy->link[0];
     myNode->val[pos] = dummy->val[1];
-
 }
 
 /* removes the value from the given node and rearrange values */
-void removeVal(btreeNode *myNode, int pos) {
+template<class T>
+void BTree<T>::removeVal(btreeNode<T> *myNode, int pos) {
     int i = pos + 1;
     while (i <= myNode->count) {
         myNode->val[i - 1] = myNode->val[i];
@@ -135,13 +132,16 @@ void removeVal(btreeNode *myNode, int pos) {
 }
 
 /* shifts value from parent to right child */
-void doRightShift(btreeNode *myNode, int pos) {
-    btreeNode *x = myNode->link[pos];
+template<class T>
+void BTree<T>::doRightShift(btreeNode<T> *myNode, int pos) {
+    btreeNode<T> *x = myNode->link[pos];
     int j = x->count;
 
     while (j > 0) {
         x->val[j + 1] = x->val[j];
         x->link[j + 1] = x->link[j];
+        j--;
+
     }
     x->val[1] = myNode->val[pos];
     x->link[1] = x->link[0];
@@ -151,13 +151,13 @@ void doRightShift(btreeNode *myNode, int pos) {
     myNode->val[pos] = x->val[x->count];
     myNode->link[pos] = x->link[x->count];
     x->count--;
-    return;
 }
 
 /* shifts value from parent to left child */
-void doLeftShift(btreeNode *myNode, int pos) {
+template<class T>
+void BTree<T>::doLeftShift(btreeNode<T> *myNode, int pos) {
     int j = 1;
-    btreeNode *x = myNode->link[pos - 1];
+    btreeNode<T> *x = myNode->link[pos - 1];
 
     x->count++;
     x->val[x->count] = myNode->val[pos];
@@ -173,13 +173,13 @@ void doLeftShift(btreeNode *myNode, int pos) {
         x->link[j] = x->link[j + 1];
         j++;
     }
-    return;
 }
 
 /* merge nodes */
-void mergeNodes(btreeNode *myNode, int pos) {
+template<class T>
+void BTree<T>::mergeNodes(btreeNode<T> *myNode, int pos) {
     int j = 1;
-    btreeNode *x1 = myNode->link[pos], *x2 = myNode->link[pos - 1];
+    btreeNode<T> *x1 = myNode->link[pos], *x2 = myNode->link[pos - 1];
 
     x2->count++;
     x2->val[x2->count] = myNode->val[pos];
@@ -203,7 +203,8 @@ void mergeNodes(btreeNode *myNode, int pos) {
 }
 
 /* adjusts the given node */
-void adjustNode(btreeNode *myNode, int pos) {
+template<class T>
+void BTree<T>::adjustNode(btreeNode<T> *myNode, int pos) {
     if (!pos) {
         if (myNode->link[1]->count > MIN) {
             doLeftShift(myNode, 1);
@@ -236,7 +237,8 @@ void adjustNode(btreeNode *myNode, int pos) {
 }
 
 /* delete val from the node */
-int delValFromNode(int val,btreeNode *myNode) {
+template<class T>
+int BTree<T>::delValFromNode(T val,btreeNode<T> *myNode) {
     int pos, flag = 0;
     if (myNode) {
         if (val < myNode->val[1]) {
@@ -277,8 +279,9 @@ int delValFromNode(int val,btreeNode *myNode) {
 }
 
 /* delete val from B-tree */
-void deletion(int val,btreeNode *myNode) {
-    btreeNode *tmp;
+template<class T>
+void BTree<T>::deletion(T val,btreeNode<T> *myNode) {
+    btreeNode<T> *tmp;
     if (!delValFromNode(val, myNode)) {
         cout<<"Given value is not present in B-Tree\n";
         return;
@@ -295,7 +298,8 @@ void deletion(int val,btreeNode *myNode) {
 }
 
 /* search val in B-Tree */
-void searching(int val, int *pos,btreeNode *myNode) {
+template<class T>
+void BTree<T>::searching(T val, int *pos,btreeNode<T> *myNode) {
     if (!myNode) {
         return;
     }
@@ -316,7 +320,8 @@ void searching(int val, int *pos,btreeNode *myNode) {
 }
 
 /* B-Tree Traversal */
-void traversal(btreeNode *myNode) {
+template<class T>
+void BTree<T>::traversal(btreeNode<T> *myNode) {
     int i;
     if (myNode) {
         for (i = 0; i < myNode->count; i++) {
