@@ -1,14 +1,16 @@
 #include <iostream>
+#include <iostream>
+#include <fstream>
+#include <vector>
 #include "Server/Servidor.h"
-#include <string>
 
-int main() {
-//
-//    std::string a = "hola";
-//    std::string b = "adios";
-//    if (a == b) {
-//        std::cout << "yes" << std::endl;
-//    }
+#include "../../rapidxml/rapidxml.hpp"
 
-    return 0;
+using namespace std;
+
+int main(){
+    std::cout << "Iniciando Servidor" << std::endl;
+    Servidor servidor = Servidor();
+    servidor.iniciar();
+
 }

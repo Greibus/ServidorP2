@@ -1,5 +1,15 @@
 
 #include "Servidor.h"
+#include <iostream>
+#include <fstream>
+#include <vector>
+#include <string.h>
+
+#include "../../rapidxml/rapidxml.hpp"
+
+using namespace std;
+string prueba = "";
+
 
 /**
  * Inicializa el servidor
@@ -11,22 +21,22 @@ void Servidor::iniciar() {
     }
     servidor.sin_family = AF_INET;
     servidor.sin_addr.s_addr = INADDR_ANY;
-    servidor.sin_port = htons(9090);
+    servidor.sin_port = htons(8080);
     if (bind(sock, (struct sockaddr *) &servidor, sizeof(servidor)) < 0) {
-        std::cout << "Error: No se pudo iniciar el servidor" << std::endl;
+        cout << "Error: No se pudo iniciar el servidor" << endl;
     }
     listen(sock, 3);
     c = sizeof(struct sockaddr_in);
-    std::cout << "Esperando nuevas conexiones" << std::endl;
+    cout << "Esperando nuevas conexiones" << endl;
     while ((sockCliente = accept(sock, (struct sockaddr *) &cliente, (socklen_t *) &c))) {
-        std::cout << "Nueva conexion aceptada" << std::endl;
+        cout << "Nueva conexion aceptada" << endl;
 
         pthread_t sniffer_thread;
         sockTemp = new int;
         *sockTemp = sockCliente;
 
         if (pthread_create(&sniffer_thread, NULL, hiloConexion, (void *) sockTemp) < 0) {
-            std::cout << "Error: No se pudo inicializar el hilo" << std::endl;
+            cout << "Error: No se pudo inicializar el hilo" << endl;
         }
 
     }
@@ -37,8 +47,8 @@ void Servidor::iniciar() {
  * @param men
  * @return
  */
-std::string Servidor::cleanMensaje(char* men) {
-    std::string temp;
+string Servidor::cleanMensaje(char* men) {
+    string temp;
     for (unsigned int i = 0; i < strlen(men); i++) {
         if (men[i] == delimitador) {
             break;
@@ -58,30 +68,56 @@ void *Servidor::hiloConexion(void *socket) {
     int sockPtr = *(int *) socket;
     int read_size;
     char client_message[1000];
-    std::string limpio;
+    string limpio;
 
     //Forma correcta de enviar datos
-    std::string dato = "Bienvenido" + delimitador; //delimitador
+    string dato = "Bienvenido" + delimitador; //delimitador
     int io = write(sockPtr, dato.c_str(), dato.length());
     if (io < 0) {
-        std::cout << "Error: No se pudo enviar el dato" << std::endl;
+        cout << "Error: No se pudo enviar el dato" << endl;
     }
 
     while ((read_size = recv(sockPtr, client_message, 1000, 0)) > 0) {
         limpio = cleanMensaje(client_message);
-        std::cout << limpio << std::endl;
+        cout << limpio << endl;
 
-        //Repetidor de mensajes
-        limpio += delimitador;
-        write(sockPtr, limpio.c_str(), limpio.length());
+        //Repetidor de mensajes y enviar
+        //limpio += delimitador;
+        //write(sockPtr, limpio.c_str(), limpio.length());
 
+        rapidxml::xml_document<> doc;
+        ofstream file;
+        file.open("/home/tony/CLionProjects/canciones.xml", ios::out);
+        if (file.fail()) {
+            cout << "NO SE CREO" << endl;
+        }
+        file << limpio << endl;
+        file.close();
+        ifstream myfile("/home/tony/CLionProjects/canciones.xml");
+
+        /* "Read file into vector<char>"  See linked thread above*/
+        vector<char> buffer((istreambuf_iterator<char>(myfile)), istreambuf_iterator<char>( ));
+
+        buffer.push_back('\0');
+
+        cout<<&buffer[0]<<endl; /*test the buffer */
+
+        doc.parse<0>(&buffer[0]);
+
+        cout << "Name of my first node is: " << doc.first_node()->name() << endl;/*test the xml_document */
+        string nombre = doc.first_node()->name();
+        if (nombre == "EnviarCancion"){
+            string nombreCancion = doc.first_node()->first_node()->first_attribute()->value();
+            string generoCancion = doc.first_node()->first_node()->first_attribute()->next_attribute()->value();
+            prueba = nombreCancion + "\n" + generoCancion;
+        }
         //Colocar logica para tratar mensajes recibidoa
     }
 
     if (read_size == 0) {
-        std::cout << "Error: Cliente desconectado" << std::endl;
+        cout << "Error: Cliente desconectado" << endl;
         fflush(stdout);
     } else if (read_size == -1) {
-        std::cout << "Error: No se recibio un dato valido" << std::endl;
+        cout << "Error: No se recibio un dato valido" << endl;
     }
 }

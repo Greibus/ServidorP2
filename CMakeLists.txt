@@ -1,9 +1,20 @@
 cmake_minimum_required(VERSION 3.10)
 project(ServidorP2)
 
+find_path(RapidXML_INCLUDE_DIR rapidxml.hpp PATH_SUFFIXES rapidxml)
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -pthread")
 set(ServidorP2 ${CMAKE_PROJECT_NAME})
+include(FindPackageHandleStandardArgs)
+find_package_handle_standard_args(RapidXML DEFAULT_MSG RapidXML_INCLUDE_DIR)
+mark_as_advanced(RapidXML_INCLUDE_DIR)
+
+if(RAPIDXML_FOUND)
+    # provide import target:
+    add_library(RapidXML::RapidXML INTERFACE IMPORTED)
+    set_target_properties(RapidXML::RapidXML PROPERTIES INTERFACE_INCLUDE_DIRECTORIES ${RapidXML_INCLUDE_DIR})
+endif()
+
 
 set(SOURCES
         main.cpp
