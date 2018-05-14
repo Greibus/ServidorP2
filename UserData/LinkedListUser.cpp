@@ -1,11 +1,10 @@
 //
 // Created by tony on 13/05/18.
 //
-
-#include "LinkedListUser.h"
 #include <iostream>
-#include <jmorecfg.h>
+#include "LinkedListUser.h"
 #include "../json.hpp"
+
 
 
 using nlohmann::json;

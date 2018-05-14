@@ -1,10 +1,10 @@
 cmake_minimum_required(VERSION 3.10)
-project(ServidorP2)
+project(ServidorP2Copia)
 
 find_path(RapidXML_INCLUDE_DIR rapidxml.hpp PATH_SUFFIXES rapidxml)
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -pthread")
-set(ServidorP2 ${CMAKE_PROJECT_NAME})
+set(ServidorP2Copia ${CMAKE_PROJECT_NAME})
 include(FindPackageHandleStandardArgs)
 find_package_handle_standard_args(RapidXML DEFAULT_MSG RapidXML_INCLUDE_DIR)
 mark_as_advanced(RapidXML_INCLUDE_DIR)

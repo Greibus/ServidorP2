@@ -10,11 +10,12 @@
 #include "NodeUser.cpp"
 #include "../json.hpp"
 using nlohmann::json;
+using namespace std;
 
 template <class T>
 class LinkedListUser {
 private:
-    NodeUser<T> *first;
+    NodeUser<T> *first = nullptr;
     int cont = 0;
 
 public:
