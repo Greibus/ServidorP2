@@ -11,17 +11,20 @@ template <class T> class NodeUser {
 private:
     T user;
     T name;
+    T lastname;
     T age;
     T genders;
     T password;
     T friends;
 
 public:
-    NodeUser (T &, T &, T &, T &, T &,  T &);
+    NodeUser (T &, T &, T &, T &, T &, T &,  T &);
     void setUser(T user);
     T getUser();
     void setName(T name);
     T getName();
+    void setLastName(T lastName);
+    T getLastName();
     void setAge(T age);
     T getAge();
     void setGenders(T gender);

@@ -6,8 +6,8 @@
 
 
 template<class T>
-NodeUser<T>::NodeUser( T &user, T &name, T &age, T &genders, T &password,  T & friends):
-        user(user), name(name), age(age), genders(genders), password(password), friends(friends),  ptrNext(0)
+NodeUser<T>::NodeUser( T &user, T &name, T &lastName,T &age, T &genders, T &password,  T & friends):
+        user(user), name(name), lastname(lastName), age(age), genders(genders), password(password), friends(friends),  ptrNext(0)
 {
 
 }
@@ -23,6 +23,17 @@ template<class T>
 T NodeUser<T>::getName() {
     return name;
 }
+
+template<class T>
+void NodeUser<T>::setLastName(T lastName) {
+    this->lastname = lastName;
+}
+
+template<class T>
+T NodeUser<T>::getLastName() {
+    return lastname;
+}
+
 template<class T>
 void NodeUser<T>::setAge(T age) {
     this->age = age;

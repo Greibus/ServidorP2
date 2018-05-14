@@ -14,8 +14,8 @@ using namespace std;
 
 
 template<class T>
-void LinkedListUser<T>::addLast(T user, T name, T age, T genders, T password, T friends) {
-    NodeUser<T> *nodeTempPtr = new NodeUser<T>(user, name, age , genders, password, friends);
+void LinkedListUser<T>::addLast(T user, T name,T lastName, T age, T genders, T password, T friends) {
+    NodeUser<T> *nodeTempPtr = new NodeUser<T>(user, name, lastName, age , genders, password, friends);
     nodeTempPtr->ptrNext = nullptr;
     if (isEmpty()) {
         first = nodeTempPtr;

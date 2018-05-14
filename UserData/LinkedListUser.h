@@ -18,7 +18,7 @@ private:
     int cont = 0;
 
 public:
-    void addLast(T user, T name, T age, T genders, T password, T friends);
+    void addLast(T user, T name, T lastName, T age, T genders, T password, T friends);
     void addIn(int pos, T num);
     void delLast();
     void delIn(int pos);
