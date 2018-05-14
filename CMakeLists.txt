@@ -38,6 +38,6 @@ set(SOURCES
         Sort/RadixSort.cpp
         Sort/RadixSort.h
         Sort/BubbleSort.cpp
-        Sort/BubbleSort.h)
+        Sort/BubbleSort.h Trees/LinkedListUser.cpp Trees/LinkedListUser.h Trees/NodeUser.cpp Trees/NodeUser.h)
 
 add_executable(${CMAKE_PROJECT_NAME} ${SOURCES})
