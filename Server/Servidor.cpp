@@ -4,12 +4,16 @@
 #include <fstream>
 #include <vector>
 #include <string.h>
+#include "../json.hpp"
+
 
 #include "../../rapidxml/rapidxml.hpp"
+#include "../UserData/LinkedListUser.h"
 
 using namespace std;
 string prueba = "";
-
+LinkedListUser<string> listaUser = LinkedListUser<string>();
+json jsonUser;
 
 /**
  * Inicializa el servidor
@@ -21,7 +25,7 @@ void Servidor::iniciar() {
     }
     servidor.sin_family = AF_INET;
     servidor.sin_addr.s_addr = INADDR_ANY;
-    servidor.sin_port = htons(8080);
+    servidor.sin_port = htons(9090);
     if (bind(sock, (struct sockaddr *) &servidor, sizeof(servidor)) < 0) {
         cout << "Error: No se pudo iniciar el servidor" << endl;
     }
@@ -87,13 +91,13 @@ void *Servidor::hiloConexion(void *socket) {
 
         rapidxml::xml_document<> doc;
         ofstream file;
-        file.open("/home/tony/CLionProjects/canciones.xml", ios::out);
+        file.open("/home/tony/CLionProjects/almacenar.xml", ios::out);
         if (file.fail()) {
             cout << "NO SE CREO" << endl;
         }
         file << limpio << endl;
         file.close();
-        ifstream myfile("/home/tony/CLionProjects/canciones.xml");
+        ifstream myfile("/home/tony/CLionProjects/almacenar.xml");
 
         /* "Read file into vector<char>"  See linked thread above*/
         vector<char> buffer((istreambuf_iterator<char>(myfile)), istreambuf_iterator<char>( ));
@@ -104,14 +108,23 @@ void *Servidor::hiloConexion(void *socket) {
 
         doc.parse<0>(&buffer[0]);
 
-        cout << "Name of my first node is: " << doc.first_node()->name() << endl;/*test the xml_document */
+        /*test the xml_document */
         string nombre = doc.first_node()->name();
         if (nombre == "EnviarCancion"){
             string nombreCancion = doc.first_node()->first_node()->first_attribute()->value();
             string generoCancion = doc.first_node()->first_node()->first_attribute()->next_attribute()->value();
             prueba = nombreCancion + "\n" + generoCancion;
         } else if(nombre == "EnviarUsuarios") {
-
+            string user = doc.first_node()->first_node()->first_attribute()->value();
+            string name = doc.first_node()->first_node()->first_attribute()->next_attribute()->value();
+            string lastName = doc.first_node()->first_node()->first_attribute()->next_attribute()->next_attribute()->value();
+            string age = doc.first_node()->first_node()->first_attribute()->next_attribute()->next_attribute()->next_attribute()->value();
+            string genders = doc.first_node()->first_node()->first_attribute()->next_attribute()->next_attribute()->next_attribute()->next_attribute()->value();
+            string password = doc.first_node()->first_node()->first_attribute()->next_attribute()->next_attribute()->next_attribute()->next_attribute()->next_attribute()->value();
+            string friends = doc.first_node()->first_node()->first_attribute()->next_attribute()->next_attribute()->next_attribute()->next_attribute()->next_attribute()->next_attribute()->value();
+            listaUser.addLast(user, name, lastName, age, genders, password, friends);
+            jsonUser.push_back(listaUser.toJson());
+            cout << "PRUEBAAAA" << endl;
         }
         //Colocar logica para tratar mensajes recibidoa
     }

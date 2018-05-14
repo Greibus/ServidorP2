@@ -85,7 +85,7 @@ bool LinkedListUser<T>::isEmpty()  {
 
 
 template <class T>
-json LinkedListUser <T>::ToJson(){
+json LinkedListUser <T>::toJson() {
     string name, user,age, friends, password, genders;
 
 

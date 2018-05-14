@@ -22,7 +22,7 @@ public:
     bool search(T user);
     void delUser(T user);
     void delIn(int pos);
-    json ToJson();
+    json toJson();
     bool isEmpty();
 
 
