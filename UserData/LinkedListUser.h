@@ -8,11 +8,15 @@
 
 #include <sys/user.h>
 #include "NodeUser.cpp"
+#include "../json.hpp"
+using nlohmann::json;
+
 template <class T>
 class LinkedListUser {
 private:
     NodeUser<T> *first;
-    int counter = 0;
+    int cont = 0;
+
 public:
     void addLast(T user, T name, T age, T genders, T password, T friends);
     void addIn(int pos, T num);
@@ -20,6 +24,9 @@ public:
     void delIn(int pos);
     T getIn(int pos);
     int getCount();
+    json ToJson();
+    bool isEmpty();
+
 
 
 };

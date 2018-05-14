@@ -15,7 +15,7 @@ private:
     T genders;
     T password;
     T friends;
-    NodeUser<T> *ptrNext;
+
 public:
     NodeUser (T &, T &, T &, T &, T &,  T &);
     void setUser(T user);
@@ -31,6 +31,7 @@ public:
     void setFriends(T friends);
     T getFriends();
 
+    NodeUser<T> *ptrNext;
 
 
 
