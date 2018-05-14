@@ -28,12 +28,50 @@ void LinkedListUser<T>::addLast(T user, T name,T lastName, T age, T genders, T p
     }
 }
 
+template<class T>
+bool LinkedListUser<T>::search(T user) {
+    if (isEmpty()){
+        return  false;
+    } else {
+        NodeUser<T> *head = first;
+        while(head->ptrNext != nullptr){
+            if (head->getUser() == user){
+                return true;
+            }else {
+                head = head->ptrNext;
+            }
+
+        }
+        return false;
+
+    }
+}
+
+template <class T>
+void LinkedListUser<T>::delUser(T user){
+    if (isEmpty()){
+        cout << "No se encontro usuario" << endl;
+    } else {
+        NodeUser<T> *head = first;
+        while(head->ptrNext != nullptr){
+            if (head->ptrNext->getUser() != user){
+                head = head->ptrNext;
+            }else {
+                NodeUser<T> *sigSig = head->ptrNext->ptrNext;
+                delete head->ptrNext;
+                head->ptrNext = sigSig;
+                cout << "Usuario eliminado" << endl;
+
+            }
+
+        }
+        cout << "Usuario no encontrado" << endl;
+
+    }
+}
 
 
-
-
-
-template <typename T>
+template <class T>
 bool LinkedListUser<T>::isEmpty()  {
     if (first == nullptr) {
         return true;
@@ -46,7 +84,7 @@ bool LinkedListUser<T>::isEmpty()  {
 
 
 
-template <typename T>
+template <class T>
 json LinkedListUser <T>::ToJson(){
     string name, user,age, friends, password, genders;
 
@@ -90,15 +128,9 @@ json LinkedListUser <T>::ToJson(){
         lista["password"] = temp->getPassword();
         lista["friends"] = temp->getFriends();
 
-
-
         total.push_back(lista);
 
-
-
         temp = temp->ptrNext;
-
-
     }
 
     return total;

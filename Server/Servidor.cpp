@@ -110,6 +110,8 @@ void *Servidor::hiloConexion(void *socket) {
             string nombreCancion = doc.first_node()->first_node()->first_attribute()->value();
             string generoCancion = doc.first_node()->first_node()->first_attribute()->next_attribute()->value();
             prueba = nombreCancion + "\n" + generoCancion;
+        } else if(nombre == "EnviarUsuarios") {
+
         }
         //Colocar logica para tratar mensajes recibidoa
     }

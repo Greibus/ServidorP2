@@ -19,11 +19,9 @@ private:
 
 public:
     void addLast(T user, T name, T lastName, T age, T genders, T password, T friends);
-    void addIn(int pos, T num);
-    void delLast();
+    bool search(T user);
+    void delUser(T user);
     void delIn(int pos);
-    T getIn(int pos);
-    int getCount();
     json ToJson();
     bool isEmpty();
 
