@@ -8,7 +8,7 @@
 
 
 #include "../../rapidxml/rapidxml.hpp"
-#include "../UserData/LinkedListUser.h"
+#include "../UserData/LinkedListUser.cpp"
 
 using namespace std;
 string prueba = "";
@@ -122,9 +122,9 @@ void *Servidor::hiloConexion(void *socket) {
             string genders = doc.first_node()->first_node()->first_attribute()->next_attribute()->next_attribute()->next_attribute()->next_attribute()->value();
             string password = doc.first_node()->first_node()->first_attribute()->next_attribute()->next_attribute()->next_attribute()->next_attribute()->next_attribute()->value();
             string friends = doc.first_node()->first_node()->first_attribute()->next_attribute()->next_attribute()->next_attribute()->next_attribute()->next_attribute()->next_attribute()->value();
-            //listaUser.addLast(user, name, lastName, age, genders, password, friends);
-            //jsonUser.push_back(listaUser.toJson());
-            cout << "PRUEBAAAA" << endl;
+            listaUser.addLast(user, name, lastName, age, genders, password, friends);
+            jsonUser.push_back(listaUser.toJson());
+            cout << "JSON USER ES " << jsonUser << endl;
         }
         //Colocar logica para tratar mensajes recibidoa
     }
