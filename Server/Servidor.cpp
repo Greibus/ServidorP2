@@ -3,11 +3,9 @@
 #include <iostream>
 #include <fstream>
 #include <vector>
-#include <string.h>
-#include "../json.hpp"
+#include <nlohmann/json.hpp>
 
-
-#include "../../rapidxml/rapidxml.hpp"
+#include <rapidxml/rapidxml.hpp>
 #include "../UserData/LinkedListUser.cpp"
 
 using namespace std;
@@ -125,6 +123,8 @@ void *Servidor::hiloConexion(void *socket) {
             listaUser.addLast(user, name, lastName, age, genders, password, friends);
             jsonUser.push_back(listaUser.toJson());
             cout << "JSON USER ES " << jsonUser << endl;
+            saveJson.saveInFile(jsonUser,0);
+            
         }
         //Colocar logica para tratar mensajes recibidoa
     }

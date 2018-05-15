@@ -8,7 +8,7 @@
 
 #include <sys/user.h>
 #include "NodeUser.cpp"
-#include "../json.hpp"
+#include <nlohmann/json.hpp>
 using nlohmann::json;
 using namespace std;
 
@@ -25,8 +25,6 @@ public:
     void delIn(int pos);
     json toJson();
     bool isEmpty();
-
-
 
 };
 

@@ -15,7 +15,7 @@
 #include <stdlib.h>
 #include <string>
 #include <pthread.h>
-#include <string.h>
+#include "../Json/SaveJson.h"
 
 static char delimitador = '*';
 
@@ -25,12 +25,14 @@ static char delimitador = '*';
 class Servidor {
     int sock, sockCliente, io, c, *sockTemp;
     struct sockaddr_in servidor, cliente;
+    SaveJson saveJson;
+
 public:
     Servidor() {}
 
     void iniciar();
 
-    static void *hiloConexion(void *);
+    void *hiloConexion(void *);
 
     static std::string cleanMensaje(char*);
 };

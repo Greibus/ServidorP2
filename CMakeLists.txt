@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.10)
-project(ServidorP2Copia)
+project(ServidorP2)
 
 find_path(RapidXML_INCLUDE_DIR rapidxml.hpp PATH_SUFFIXES rapidxml)
 set(CMAKE_CXX_STANDARD 11)
@@ -43,6 +43,6 @@ set(SOURCES
         UserData/LinkedListUser.h
         UserData/NodeUser.cpp
         UserData/NodeUser.h
-        )
+        Json/SaveJson.cpp Json/SaveJson.h)
 
 add_executable(${CMAKE_PROJECT_NAME} ${SOURCES})

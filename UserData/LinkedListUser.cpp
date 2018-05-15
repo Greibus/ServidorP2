@@ -3,14 +3,10 @@
 //
 #include <iostream>
 #include "LinkedListUser.h"
-#include "../json.hpp"
-
-
+#include <nlohmann/json.hpp>
 
 using nlohmann::json;
 using namespace std;
-
-
 
 template<class T>
 void LinkedListUser<T>::addLast(T user, T name,T lastName, T age, T genders, T password, T friends) {
