@@ -124,7 +124,7 @@ void *Servidor::hiloConexion(void *socket) {
             jsonUser.push_back(listaUser.toJson());
             cout << "JSON USER ES " << jsonUser << endl;
             saveJson.saveInFile(jsonUser,0);
-            
+
         }
         //Colocar logica para tratar mensajes recibidoa
     }
