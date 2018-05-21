@@ -23,10 +23,14 @@ static char delimitador = '*';
  * Servidor multi hilos
  */
 class Servidor {
+
+private:
     int sock, sockCliente, io, c, *sockTemp;
     struct sockaddr_in servidor, cliente;
 
-    SaveJson *saveJson = new SaveJson();
+    static Servidor instancia;
+
+    SaveJson saveJson;
 
 public:
     Servidor() {}
@@ -36,6 +40,8 @@ public:
     static void *hiloConexion(void *);
 
     static std::string cleanMensaje(char*);
+
+    void saveData(json, int);
 };
 
 

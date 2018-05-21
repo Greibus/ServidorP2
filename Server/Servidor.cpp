@@ -123,8 +123,9 @@ void *Servidor::hiloConexion(void *socket) {
             listaUser.addLast(user, name, lastName, age, genders, password, friends);
             jsonUser.push_back(listaUser.toJson());
             cout << "JSON USER ES " << jsonUser << endl;
-            saveJson->saveInFile(jsonUser,0);
 
+//            no se pueden implementar otras funciones aqui;
+//            s.saveData(jsonUser,0);
         }
         //Colocar logica para tratar mensajes recibidoa
     }
@@ -135,4 +136,8 @@ void *Servidor::hiloConexion(void *socket) {
     } else if (read_size == -1) {
         cout << "Error: No se recibio un dato valido" << endl;
     }
+}
+
+void Servidor::saveData(json json1, int cond) {
+    saveJson.saveInFile(cond, json1);
 }
