@@ -123,7 +123,7 @@ void *Servidor::hiloConexion(void *socket) {
             listaUser.addLast(user, name, lastName, age, genders, password, friends);
             jsonUser.push_back(listaUser.toJson());
             cout << "JSON USER ES " << jsonUser << endl;
-            saveJson.saveInFile(jsonUser,0);
+            saveJson->saveInFile(jsonUser,0);
 
         }
         //Colocar logica para tratar mensajes recibidoa

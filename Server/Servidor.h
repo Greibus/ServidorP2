@@ -25,14 +25,15 @@ static char delimitador = '*';
 class Servidor {
     int sock, sockCliente, io, c, *sockTemp;
     struct sockaddr_in servidor, cliente;
-    SaveJson saveJson;
+
+    SaveJson *saveJson = new SaveJson();
 
 public:
     Servidor() {}
 
     void iniciar();
 
-    void *hiloConexion(void *);
+    static void *hiloConexion(void *);
 
     static std::string cleanMensaje(char*);
 };

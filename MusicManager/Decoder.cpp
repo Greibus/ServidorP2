@@ -61,5 +61,5 @@ Decoder::Decoder(std::string musica) {
     mpg123_close(mh);
     mpg123_delete(mh);
     mpg123_exit();
-    ao_shutdown();
+//    ao_shutdown();
 }
