@@ -92,7 +92,6 @@ set(SOURCES
         Server/Servidor.h
         UserData/User.cpp
         UserData/User.h
-        MusicManager/Genre.h
         Trees/LinkedList.cpp
         Trees/LinkedList.h
         Trees/LLNode.cpp
@@ -113,7 +112,7 @@ set(SOURCES
         UserData/LinkedListUser.h
         UserData/NodeUser.cpp
         UserData/NodeUser.h
-        Json/SaveJson.cpp Json/SaveJson.h MusicManager/SongNode.cpp MusicManager/SongNode.h MusicManager/Decoder.cpp MusicManager/Decoder.h)
+        Json/SaveJson.cpp Json/SaveJson.h MusicManager/Song.cpp MusicManager/Song.h MusicManager/Decoder.cpp MusicManager/Decoder.h MusicManager/SongManager.cpp MusicManager/SongManager.h)
 
 #Se conecta con la libreria de mpg123
 include_directories(${MPG123_INCLUDE_DIRS})

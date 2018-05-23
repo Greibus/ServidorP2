@@ -5,10 +5,12 @@
 #ifndef SERVIDORPROYECTO2_BUBBLESORT_H
 #define SERVIDORPROYECTO2_BUBBLESORT_H
 
+#include "../Trees/LinkedList.h"
+#include "../MusicManager/Song.h"
 
 class BubbleSort {
 public:
-    void bubbleSort(int *array, int high);
+    void bubbleSort(LinkedList<Song*> *array, int high);
 
 };
 

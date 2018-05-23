@@ -4,19 +4,19 @@
 
 #include "BubbleSort.h"
 
-void swap(int *array, int i, int j) {
-    int temp = array[i];
-    array[i] = array[j];
-    array[j] = temp;
+void swap(LinkedList<Song*> *array, int i, int j) {
+    Song *temp = array->getIn(i);
+    array->editIn(i,array->getIn(j));
+    array->editIn(j,temp);
 }
 
-void BubbleSort::bubbleSort(int *array, int high) {
+void BubbleSort::bubbleSort(LinkedList<Song*> *array, int high) {
     int last = 0;
     bool pasada = true;
     while (pasada) {
         pasada = false;
         for (int i = 1; i < high - last; i++) {
-            if (array[i - 1] > (array[i])) {
+            if (array->getIn(i - 1) > array->getIn(i)) {
                 swap(array, i, i - 1);
                 pasada = true;
             }
