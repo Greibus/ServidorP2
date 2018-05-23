@@ -3,7 +3,7 @@
 //
 #include <iostream>
 #include "LinkedListUser.h"
-#include <nlohmann/json.hpp>
+//#include <nlohmann/json.hpp>
 
 using nlohmann::json;
 using namespace std;
@@ -29,6 +29,9 @@ bool LinkedListUser<T>::search(T user) {
         return  false;
     } else {
         NodeUser<T> *head = first;
+        if(first->getUser() == user){
+            return true;
+        }
         while(head->ptrNext != nullptr){
             if (head->getUser() == user){
                 return true;

@@ -4,7 +4,7 @@ project(ServidorP2)
 find_path(RapidXML_INCLUDE_DIR rapidxml.hpp PATH_SUFFIXES rapidxml)
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -pthread")
-set(ServidorP2Copia ${CMAKE_PROJECT_NAME})
+set(ServidorP2 ${CMAKE_PROJECT_NAME})
 include(FindPackageHandleStandardArgs)
 find_package_handle_standard_args(RapidXML DEFAULT_MSG RapidXML_INCLUDE_DIR)
 mark_as_advanced(RapidXML_INCLUDE_DIR)
@@ -113,7 +113,13 @@ set(SOURCES
         UserData/LinkedListUser.h
         UserData/NodeUser.cpp
         UserData/NodeUser.h
-        Json/SaveJson.cpp Json/SaveJson.h MusicManager/SongNode.cpp MusicManager/SongNode.h MusicManager/Decoder.cpp MusicManager/Decoder.h)
+        Json/SaveJson.cpp
+        Json/SaveJson.h
+        MusicManager/SongNode.cpp
+        MusicManager/SongNode.h
+        MusicManager/Decoder.cpp
+        MusicManager/Decoder.h
+        json.hpp)
 
 #Se conecta con la libreria de mpg123
 include_directories(${MPG123_INCLUDE_DIRS})

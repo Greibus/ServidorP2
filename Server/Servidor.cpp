@@ -3,7 +3,7 @@
 #include <iostream>
 #include <fstream>
 #include <vector>
-#include <nlohmann/json.hpp>
+//#include <nlohmann/json.hpp>
 
 #include <rapidxml/rapidxml.hpp>
 #include "../UserData/LinkedListUser.cpp"
@@ -23,7 +23,7 @@ void Servidor::iniciar() {
     }
     servidor.sin_family = AF_INET;
     servidor.sin_addr.s_addr = INADDR_ANY;
-    servidor.sin_port = htons(9090);
+    servidor.sin_port = htons(8080);
     if (bind(sock, (struct sockaddr *) &servidor, sizeof(servidor)) < 0) {
         cout << "Error: No se pudo iniciar el servidor" << endl;
     }
@@ -69,22 +69,22 @@ string Servidor::cleanMensaje(char* men) {
 void *Servidor::hiloConexion(void *socket) {
     int sockPtr = *(int *) socket;
     int read_size;
-    char client_message[1000];
+    char client_message[1000000];
     string limpio;
 
     //Forma correcta de enviar datos
-    string dato = "Bienvenido" + delimitador; //delimitador
-    int io = write(sockPtr, dato.c_str(), dato.length());
-    if (io < 0) {
-        cout << "Error: No se pudo enviar el dato" << endl;
-    }
+    //string dato = "USUARIO Regist" + delimitador; //delimitador
+    //int io = write(sockPtr, dato.c_str(), dato.length());
+    //write(sockPtr, dato.c_str(),dato.length());
+    //if (io < 0) {
+      //  cout << "Error: No se pudo enviar el dato" << endl;
+    //}
 
     while ((read_size = recv(sockPtr, client_message, 1000, 0)) > 0) {
         limpio = cleanMensaje(client_message);
         cout << limpio << endl;
-
         //Repetidor de mensajes y enviar
-        //limpio += delimitador;
+        //limpio += "hola";
         //write(sockPtr, limpio.c_str(), limpio.length());
 
         rapidxml::xml_document<> doc;
@@ -96,38 +96,41 @@ void *Servidor::hiloConexion(void *socket) {
         file << limpio << endl;
         file.close();
         ifstream myfile("/home/tony/CLionProjects/almacenar.xml");
-
-        /* "Read file into vector<char>"  See linked thread above*/
+        //"Read file into vector<char>"  See linked thread above
         vector<char> buffer((istreambuf_iterator<char>(myfile)), istreambuf_iterator<char>( ));
-
         buffer.push_back('\0');
-
-        cout<<&buffer[0]<<endl; /*test the buffer */
-
+        cout<<&buffer[0]<<endl; //test the buffer
         doc.parse<0>(&buffer[0]);
-
-        /*test the xml_document */
+        //test the xml_document
         string nombre = doc.first_node()->name();
         if (nombre == "EnviarCancion"){
             string nombreCancion = doc.first_node()->first_node()->first_attribute()->value();
-            string generoCancion = doc.first_node()->first_node()->first_attribute()->next_attribute()->value();
+            string generoCancion = doc.first_node()->first_node()->next_sibling()->first_attribute()->value();
+            string anoCancion = doc.first_node()->first_node()->next_sibling()->first_attribute()->next_attribute()->value();
+            string albumCancion = doc.first_node()->first_node()->next_sibling()->first_attribute()->next_attribute()->next_attribute()->next_attribute()->value();
+            string letraCancion = doc.first_node()->first_node()->next_sibling()->first_attribute()->next_attribute()->next_attribute()->next_attribute()->next_attribute()->value();
+            string crudoCancion = doc.first_node()->first_node()->next_sibling()->next_sibling()->first_attribute()->value();
             prueba = nombreCancion + "\n" + generoCancion;
         } else if(nombre == "EnviarUsuarios") {
             string user = doc.first_node()->first_node()->first_attribute()->value();
-            string name = doc.first_node()->first_node()->first_attribute()->next_attribute()->value();
-            string lastName = doc.first_node()->first_node()->first_attribute()->next_attribute()->next_attribute()->value();
-            string age = doc.first_node()->first_node()->first_attribute()->next_attribute()->next_attribute()->next_attribute()->value();
-            string genders = doc.first_node()->first_node()->first_attribute()->next_attribute()->next_attribute()->next_attribute()->next_attribute()->value();
-            string password = doc.first_node()->first_node()->first_attribute()->next_attribute()->next_attribute()->next_attribute()->next_attribute()->next_attribute()->value();
-            string friends = doc.first_node()->first_node()->first_attribute()->next_attribute()->next_attribute()->next_attribute()->next_attribute()->next_attribute()->next_attribute()->value();
-            listaUser.addLast(user, name, lastName, age, genders, password, friends);
-            jsonUser.push_back(listaUser.toJson());
-            cout << "JSON USER ES " << jsonUser << endl;
-
-//            no se pueden implementar otras funciones aqui;
-//            s.saveData(jsonUser,0);
+            if (!listaUser.search(user)){
+                string name = doc.first_node()->first_node()->first_attribute()->next_attribute()->value();
+                string lastName = doc.first_node()->first_node()->first_attribute()->next_attribute()->next_attribute()->value();
+                string age = doc.first_node()->first_node()->first_attribute()->next_attribute()->next_attribute()->next_attribute()->value();
+                string genders = doc.first_node()->first_node()->first_attribute()->next_attribute()->next_attribute()->next_attribute()->next_attribute()->value();
+                string password = doc.first_node()->first_node()->first_attribute()->next_attribute()->next_attribute()->next_attribute()->next_attribute()->next_attribute()->value();
+                string friends = doc.first_node()->first_node()->first_attribute()->next_attribute()->next_attribute()->next_attribute()->next_attribute()->next_attribute()->next_attribute()->value();
+                listaUser.addLast(user, name, lastName, age, genders, password, friends);
+                jsonUser.push_back(listaUser.toJson());
+                cout << "JSON USER ES " << jsonUser << endl;
+                string datoUser = "usuario registrado\n";
+                write(sockPtr,datoUser.c_str(), datoUser.length());
+            } else {
+                string datoUser = "Elija otro usuario registrado\n";
+                write(sockPtr,datoUser.c_str(), datoUser.length());
+            }
         }
-        //Colocar logica para tratar mensajes recibidoa
+        remove("/home/tony/CLionProjects/almacenar.xml");
     }
 
     if (read_size == 0) {
