@@ -92,7 +92,6 @@ set(SOURCES
         Server/Servidor.h
         UserData/User.cpp
         UserData/User.h
-        MusicManager/Genre.h
         Trees/LinkedList.cpp
         Trees/LinkedList.h
         Trees/LLNode.cpp
@@ -115,8 +114,8 @@ set(SOURCES
         UserData/NodeUser.h
         Json/SaveJson.cpp
         Json/SaveJson.h
-        MusicManager/SongNode.cpp
-        MusicManager/SongNode.h
+        MusicManager/Song.cpp
+        MusicManager/Song.h
         MusicManager/Decoder.cpp
         MusicManager/Decoder.h
         json.hpp)

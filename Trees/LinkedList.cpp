@@ -33,7 +33,7 @@ void LinkedList<T>::addLast(T num) {
             head = head->getRight();
         }
         head ->setRight(new LLNode<T>(num));
-        head = new LLNode<int>();
+        head = new LLNode<T>();
         delete head;
         counter += 1;
     }
@@ -44,7 +44,7 @@ void LinkedList<T>::addFirst(T num) {
     LLNode<T> *temp = new LLNode<T>(num);
     temp ->setRight(first);
     first = temp;
-    temp = new LLNode<int>();
+    temp = new LLNode<T>();
     delete temp;
     counter += 1;
 }
@@ -97,11 +97,11 @@ void LinkedList<T>::delFirst() {
         return;
     } else {
         LLNode<T> *head = first->getRight();
-        first = new LLNode<int>();
+        first = new LLNode<T>();
         delete first;
-        first = new LLNode<int>();
+        first = new LLNode<T>();
         first = head;
-        head = new LLNode<int>();
+        head = new LLNode<T>();
         delete head;
         counter -= 1;
     }
