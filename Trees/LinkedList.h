@@ -5,7 +5,7 @@
 #ifndef LINKEDLIST_H
 #define LINKEDLIST_H
 
-#include "LLNode.cpp"
+#include "LLNode.h"
 #include "../MusicManager/Song.h"
 
 // Usado para el nombre de lo albumes en las cancion, ordenado y buscado con binary search.

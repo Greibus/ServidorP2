@@ -2,7 +2,7 @@
 // Created by kisung on 22/05/18.
 //
 
-#include "SongManager.h"
+#include "MusicManager.h"
 
 void SongManager::init() {
 

@@ -34,7 +34,4 @@ LLNode<T> *LLNode<T>::getRight() {
     return right;
 }
 
-
-
-
-
+template class LLNode<Song*>;

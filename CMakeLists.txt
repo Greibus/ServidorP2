@@ -117,7 +117,9 @@ set(SOURCES
         MusicManager/Song.cpp
         MusicManager/Song.h
         MusicManager/Decoder.cpp
-        MusicManager/Decoder.h)
+        MusicManager/Decoder.h
+#        json.hpp
+        )
 
 #Se conecta con la libreria de mpg123
 include_directories(${MPG123_INCLUDE_DIRS})

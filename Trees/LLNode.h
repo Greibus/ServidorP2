@@ -5,6 +5,8 @@
 #ifndef NODE_H
 #define NODE_H
 
+#include "../MusicManager/Song.h"
+
 template <class T> class LLNode {
 
 private:
