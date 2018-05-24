@@ -168,3 +168,5 @@ void LinkedList<T>::editIn(int pos,T num) {
         head->setValor(num);
     }
 }
+
+template class LinkedList<Song*>;
