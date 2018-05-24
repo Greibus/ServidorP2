@@ -123,11 +123,12 @@ void *Servidor::hiloConexion(void *socket) {
                 listaUser.addLast(user, name, lastName, age, genders, password, friends);
                 jsonUser.push_back(listaUser.toJson());
                 cout << "JSON USER ES " << jsonUser << endl;
-                string datoUser = "usuario registrado\n";
+                string datoUser = "Usuario registrado\n";
                 write(sockPtr,datoUser.c_str(), datoUser.length());
             } else {
-                string datoUser = "Elija otro usuario registrado\n";
+                string datoUser = "Elija otro usuario\n";
                 write(sockPtr,datoUser.c_str(), datoUser.length());
+                send(sockPtr,datoUser.c_str(),datoUser.length(), -1);
             }
         }
         remove("/home/tony/CLionProjects/almacenar.xml");
