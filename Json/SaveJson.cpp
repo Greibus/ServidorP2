@@ -8,6 +8,9 @@
 void SaveJson::saveInFile(int type, json json1) {
 
     std::ofstream file;
+    file.open("../.metadata/users.json", std::ofstream::out | std::ofstream::trunc);
+    file.open("../.metadata/music.json", std::ofstream::out | std::ofstream::trunc);
+    file.close();
 
     if ( type == 0 ) {
         file.open("../.metadata/users.json", std::ios::binary | std::ios::out);

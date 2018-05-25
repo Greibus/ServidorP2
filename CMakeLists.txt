@@ -119,8 +119,8 @@ set(SOURCES
         MusicManager/Decoder.cpp
         MusicManager/Decoder.h
         MusicManager/MusicManager.h
-        MusicManager/MusicManager.cpp
-#        json.hpp
+
+        MusicManager/MusicManager.h
         )
 
 #Se conecta con la libreria de mpg123

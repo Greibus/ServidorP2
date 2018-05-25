@@ -4,14 +4,18 @@
 #include <fstream>
 #include <vector>
 //#include <nlohmann/json.hpp>
-
 #include <rapidxml/rapidxml.hpp>
 #include "../UserData/LinkedListUser.cpp"
+#include "../Json/SaveJson.h"
+#include "../MusicManager/MusicManager.h"
 
 using namespace std;
 string prueba = "";
 LinkedListUser<string> listaUser = LinkedListUser<string>();
+SaveJson data = SaveJson();
+//SongManager manager = SongManager();
 json jsonUser;
+json songs;
 
 /**
  * Inicializa el servidor
@@ -23,7 +27,7 @@ void Servidor::iniciar() {
     }
     servidor.sin_family = AF_INET;
     servidor.sin_addr.s_addr = INADDR_ANY;
-    servidor.sin_port = htons(8080);
+    servidor.sin_port = htons(9090);
     if (bind(sock, (struct sockaddr *) &servidor, sizeof(servidor)) < 0) {
         cout << "Error: No se pudo iniciar el servidor" << endl;
     }
@@ -110,7 +114,9 @@ void *Servidor::hiloConexion(void *socket) {
             string albumCancion = doc.first_node()->first_node()->next_sibling()->first_attribute()->next_attribute()->next_attribute()->next_attribute()->value();
             string letraCancion = doc.first_node()->first_node()->next_sibling()->first_attribute()->next_attribute()->next_attribute()->next_attribute()->next_attribute()->value();
             string crudoCancion = doc.first_node()->first_node()->next_sibling()->next_sibling()->first_attribute()->value();
-            prueba = nombreCancion + "\n" + generoCancion;
+            //manager.addNewSong(nombreCancion);
+            songs = {{"Nombre", nombreCancion} ,{"genero", generoCancion},{"año",anoCancion},{"Album",albumCancion},{"Letra",letraCancion},{"crude",crudoCancion}};
+            data.saveInFile(1, songs);
         } else if(nombre == "EnviarUsuarios") {
             string user = doc.first_node()->first_node()->first_attribute()->value();
             if (!listaUser.search(user)){
@@ -122,11 +128,13 @@ void *Servidor::hiloConexion(void *socket) {
                 string friends = doc.first_node()->first_node()->first_attribute()->next_attribute()->next_attribute()->next_attribute()->next_attribute()->next_attribute()->next_attribute()->value();
                 listaUser.addLast(user, name, lastName, age, genders, password, friends);
                 jsonUser.push_back(listaUser.toJson());
+                data.saveInFile(0, jsonUser);
                 cout << "JSON USER ES " << jsonUser << endl;
-                string datoUser = "usuario registrado\n";
+                string datoUser = "Usuario registrado\n";
                 write(sockPtr,datoUser.c_str(), datoUser.length());
+                jsonUser.clear();
             } else {
-                string datoUser = "Elija otro usuario registrado\n";
+                string datoUser = "Elija otro usuario\n";
                 write(sockPtr,datoUser.c_str(), datoUser.length());
             }
         }

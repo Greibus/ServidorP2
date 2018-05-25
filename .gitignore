@@ -3,4 +3,4 @@ cmake-build-debug/
 _DS_Store
 CMakeLists.txt
 json.hpp
-
+.metadata/
