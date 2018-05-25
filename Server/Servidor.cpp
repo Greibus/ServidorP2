@@ -115,7 +115,7 @@ void *Servidor::hiloConexion(void *socket) {
             string letraCancion = doc.first_node()->first_node()->next_sibling()->first_attribute()->next_attribute()->next_attribute()->next_attribute()->next_attribute()->value();
             string crudoCancion = doc.first_node()->first_node()->next_sibling()->next_sibling()->first_attribute()->value();
             //manager.addNewSong(nombreCancion);
-            songs = {{"Nombre", nombreCancion} ,{"genero", generoCancion},{"año",anoCancion},{"Album",albumCancion},{"Letra",letraCancion},{"crude",crudoCancion}}23;
+            songs = {{"Nombre", nombreCancion} ,{"genero", generoCancion},{"año",anoCancion},{"Album",albumCancion},{"Letra",letraCancion},{"crude",crudoCancion}};
             data.saveInFile(1, songs);
         } else if(nombre == "EnviarUsuarios") {
             string user = doc.first_node()->first_node()->first_attribute()->value();
