@@ -132,10 +132,10 @@ void *Servidor::hiloConexion(void *socket) {
                 cout << "JSON USER ES " << jsonUser << endl;
                 string datoUser = "Usuario registrado\n";
                 write(sockPtr,datoUser.c_str(), datoUser.length());
+                jsonUser.clear();
             } else {
                 string datoUser = "Elija otro usuario\n";
                 write(sockPtr,datoUser.c_str(), datoUser.length());
-                send(sockPtr,datoUser.c_str(),datoUser.length(), -1);
             }
         }
         remove("/home/tony/CLionProjects/almacenar.xml");
