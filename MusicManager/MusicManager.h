@@ -10,14 +10,14 @@
 #include "../Sort/BubbleSort.h"
 #include "../Sort/QuickSort.h"
 #include "../Sort/RadixSort.h"
-#include "../Trees/LinkedList.cpp"
+#include "../Trees/LinkedList.h"
 #include "Song.h"
 #include <nlohmann/json.hpp>
 #include <string>
 
 using json = nlohmann::json;
 
-class SongManager {
+class MusicManager {
 private:
     QuickSort nameSort;
     RadixSort artistSort;

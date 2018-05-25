@@ -4,18 +4,17 @@
 
 #include "MusicManager.h"
 
-void SongManager::init() {
+void MusicManager::init() {
 
 }
 
 
-void SongManager::addNewSong(std::string name) {
-    Song *newSong = new Song();
-    newSong->setSongName(name);
+void MusicManager::addNewSong(std::string name) {
+    Song *newSong = new Song(name);
     songs->addLast(newSong);
 }
 
-void SongManager::modifySong(std::string name, std::string type, std::string valor) {
+void MusicManager::modifySong(std::string name, std::string type, std::string valor) {
     for (int i = 0; i < songs->getCount(); i++ ) {
 
         if (songs->getIn(i)->getSongName() == name) {
@@ -34,7 +33,7 @@ void SongManager::modifySong(std::string name, std::string type, std::string val
     }
 }
 
-void SongManager::rateSong(float rate, std::string name) {
+void MusicManager::rateSong(float rate, std::string name) {
     for (int i = 0; i < songs->getCount(); i++ ) {
 
         if (songs->getIn(i)->getSongName() == name) {
@@ -45,7 +44,7 @@ void SongManager::rateSong(float rate, std::string name) {
     }
 }
 
-void SongManager::deleteSong(std::string name) {
+void MusicManager::deleteSong(std::string name) {
     for (int i = 0; i < songs->getCount(); i++ ) {
 
         if (songs->getIn(i)->getSongName() == name) {
@@ -56,32 +55,32 @@ void SongManager::deleteSong(std::string name) {
     }
 }
 
-void SongManager::getByName() {
+void MusicManager::getByName() {
     
 }
 
-void SongManager::getByAlbum() {
+void MusicManager::getByAlbum() {
 
 }
 
-void SongManager::getByArtirst() {
+void MusicManager::getByArtirst() {
 
 }
 
-void SongManager::saveSongs() {
+void MusicManager::saveSongs() {
 
 }
 
-void SongManager::drop() {
+void MusicManager::drop() {
 
 }
 
-void SongManager::search(std::string) {
+void MusicManager::search(std::string) {
 
 }
 
 
 // funcion para reconstruir cancion que viene del cliente
-void SongManager::encoder() {
+void MusicManager::encoder() {
 
 }

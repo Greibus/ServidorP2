@@ -170,3 +170,4 @@ void LinkedList<T>::editIn(int pos,T num) {
 }
 
 template class LinkedList<Song*>;
+template class LinkedList<std::string>;

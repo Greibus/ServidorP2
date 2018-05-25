@@ -7,6 +7,7 @@
 
 #include "../Trees/LinkedList.h"
 #include "../MusicManager/Song.h"
+#include <string>
 
 class BubbleSort {
 public:

@@ -5,10 +5,12 @@
 #ifndef SERVIDORPROYECTO2_RADIXSORT_H
 #define SERVIDORPROYECTO2_RADIXSORT_H
 
+#include "../MusicManager/Song.h"
+#include "../Trees/LinkedList.h"
 
 class RadixSort {
 public:
-    void radixSort(int a[], int length);
+    void radixSort(LinkedList<Song*> *a, int length);
 
 };
 

@@ -5,11 +5,12 @@
 #ifndef SERVIDORPROYECTO2_QUICKSORT_H
 #define SERVIDORPROYECTO2_QUICKSORT_H
 
+#include "../MusicManager/Song.h"
+#include "../Trees/LinkedList.h"
 
 class QuickSort {
 public:
-    void printArray(int *array, int n);
-    void quickSort(int *array, int low, int high);
+    void quickSort(LinkedList<Song*> *array, int low, int high);
 
 };
 

@@ -19,6 +19,11 @@ private:
     int year;
 
 public:
+    explicit Song (std::string name);
+
+    explicit Song (std::string name, std::string artist, std::string album, std::string genre,
+                   std::string path, int year);
+
     int getYear() const;
 
     void setYear(int year);

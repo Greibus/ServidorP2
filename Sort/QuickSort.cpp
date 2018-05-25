@@ -4,32 +4,24 @@
 
 #include "QuickSort.h"
 
-#include <iostream>
-
-void QuickSort::printArray(int *array, int n)
-{
-    for (int i = 0; i < n; ++i)
-        std::cout << array[i] << std::endl;
-}
-
-void QuickSort::quickSort(int *array, int low, int high)
+void QuickSort::quickSort(LinkedList<Song*> *array, int low, int high)
 {
     int i = low;
     int j = high;
-    int pivot = array[(i + j) / 2];
-    int temp;
+    std::string pivot = array->getIn((i + j) / 2)->getSongName();
+    Song *temp;
 
     while (i <= j)
     {
-        while (array[i] < pivot)
+        while (array->getIn(i)->getSongName().compare(pivot)<0)
             i++;
-        while (array[j] > pivot)
+        while (array->getIn(j)->getSongName().compare(pivot)>0)
             j--;
         if (i <= j)
         {
-            temp = array[i];
-            array[i] = array[j];
-            array[j] = temp;
+            temp = array->getIn(i);
+            array->editIn(i,array->getIn(j));
+            array->editIn(j, temp);
             i++;
             j--;
         }

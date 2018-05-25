@@ -118,6 +118,8 @@ set(SOURCES
         MusicManager/Song.h
         MusicManager/Decoder.cpp
         MusicManager/Decoder.h
+        MusicManager/MusicManager.h
+        MusicManager/MusicManager.cpp
 #        json.hpp
         )
 

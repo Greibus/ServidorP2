@@ -35,3 +35,4 @@ LLNode<T> *LLNode<T>::getRight() {
 }
 
 template class LLNode<Song*>;
+template class LLNode<std::string>;

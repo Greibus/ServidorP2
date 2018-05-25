@@ -68,3 +68,16 @@ void Song::setYear(int year) {
     Song::year = year;
 }
 
+Song::Song(std::string name) {
+    this->songName = name;
+}
+
+Song::Song(std::string name, std::string artist, std::string album, std::string genre,
+           std::string path, int year) {
+    this->songName = name;
+    this->artist = artist;
+    this->album = album;
+    this->genre = genre;
+    this->path = path;
+    this->year = year;
+}

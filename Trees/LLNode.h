@@ -2,8 +2,8 @@
 // Created by kisung on 23/02/18.
 //
 
-#ifndef NODE_H
-#define NODE_H
+#ifndef LLNODE_H
+#define LLNODE_H
 
 #include "../MusicManager/Song.h"
 
