@@ -14,9 +14,9 @@ using namespace std;
 
 int main(){
 
-//    std::cout << "Iniciando Servidor" << std::endl;
-//    Servidor servidor = Servidor();
-//    servidor.iniciar();
+    std::cout << "Iniciando Servidor" << std::endl;
+    Servidor servidor = Servidor();
+    servidor.iniciar();
 
 //    auto *lista = new LinkedList<Song*>();
 //    Song* song = new Song("Hola","Marcos","Que suena","Rock","../Music/",2014);

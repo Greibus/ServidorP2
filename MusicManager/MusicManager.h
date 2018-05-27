@@ -14,8 +14,14 @@
 #include "Song.h"
 #include <nlohmann/json.hpp>
 #include <string>
+#include "../Json/SaveJson.h"
 
 using json = nlohmann::json;
+
+struct index {
+    string value;
+    int pos;
+};
 
 class MusicManager {
 private:
@@ -23,11 +29,13 @@ private:
     RadixSort artistSort;
     BubbleSort albumSort;
 
+    SaveJson saveJson;
+
     LinkedList<Song*> *songs = new LinkedList<Song*>();
 
-    BTree<std::string> *names = new BTree<std::string>();
-    AVLTree<std::string> *artists = new AVLTree<std::string>();
-    LinkedList<std::string> *albums = new LinkedList<std::string>();
+//    BTree<index> *names = new BTree<index>();
+//    AVLTree<index> *artists = new AVLTree<index>();
+//    LinkedList<index> *albums = new LinkedList<index>();
 
 public:
     void init();
@@ -36,11 +44,12 @@ public:
     void modifySong(std::string name, std::string type, std::string valor);
     void rateSong(float rate, std::string name);
     void deleteSong(std::string name);
-    void search(std::string);
+    void search(std::string, std::string);
 
-    void getByName();
-    void getByAlbum();
-    void getByArtirst();
+    LinkedList<Song*>* getByName();
+    LinkedList<Song*>* getByAlbum();
+    LinkedList<Song*>* getByArtirst();
+
     void drop();
 
     void encoder();
