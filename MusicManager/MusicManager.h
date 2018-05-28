@@ -16,6 +16,7 @@
 #include <nlohmann/json.hpp>
 #include <string>
 #include "../Json/SaveJson.h"
+#include "Decoder.h"
 
 using json = nlohmann::json;
 using base64 = cppcodec::base32_rfc4648;
@@ -31,7 +32,7 @@ private:
     RadixSort artistSort;
     BubbleSort albumSort;
 
-    Song *actualSong;
+    Decoder *decoder;
 
     base64 base;
     SaveJson saveJson;
@@ -42,6 +43,8 @@ private:
 //    LinkedList<index> *albums = new LinkedList<index>();
 
 public:
+    Song *playingSong;
+
     void init();
 
     void addNewSong(std::string name);
@@ -56,11 +59,15 @@ public:
 
     void getSong(std::string name);
 
-    void drop();
-
     void encoder(std::string b64file, std::string name);
 
     void saveSongs();
+
+    char* getPage();
+
+    char* getPage(int pos);
+
+    char* getNextPage();
 
 };
 

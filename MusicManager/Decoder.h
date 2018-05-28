@@ -9,8 +9,6 @@
 #include <mpg123.h>
 #include <out123.h>
 
-#define BITS 8
-
 class Decoder {
 private:
     int err;
@@ -20,11 +18,17 @@ private:
     size_t done;
     int channels, encoding;
     long rate;
-    int totalBytes;
+
+    std::string name;
 
 public:
-    explicit Decoder(std::string);
+    int totalBytes;
 
+    Decoder();
+    ~Decoder();
+
+    void decode(std::string name);
+    char* getNextPage();
 };
 
 

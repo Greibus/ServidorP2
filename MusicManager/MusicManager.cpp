@@ -118,10 +118,6 @@ void MusicManager::saveSongs() {
     saveJson.saveInFile(1,array);
 }
 
-void MusicManager::drop() {
-
-}
-
 void MusicManager::search(std::string type, std::string name) {
     if (type == "name") {
 
@@ -144,9 +140,23 @@ void MusicManager::getSong(std::string name) {
     for (int i = 0; i < songs->getCount(); i++ ) {
 
         if (songs->getIn(i)->getSongName() == name) {
-
+            decoder = new Decoder(songs->getIn(i)->getPath());
+            playingSong = songs->getIn(i);
         } else {
             //cancion no econtrada;
         }
     }
 }
+
+char *MusicManager::getPage() {
+    return nullptr;
+}
+
+char *MusicManager::getPage(int pos) {
+    return nullptr;
+}
+
+char *MusicManager::getNextPage() {
+    return nullptr;
+}
+
