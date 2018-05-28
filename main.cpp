@@ -14,9 +14,16 @@ using namespace std;
 
 int main(){
 
-    std::cout << "Iniciando Servidor" << std::endl;
-    Servidor servidor = Servidor();
-    servidor.iniciar();
+    MusicManager *musicManager = new MusicManager();
+    musicManager->init();
+
+    musicManager->modifySong("The House Of The Rising Sun","artist","The Animals");
+//    musicManager->addNewSong("The House Of The Rising Sun");
+    musicManager->saveSongs();
+
+//    std::cout << "Iniciando Servidor" << std::endl;
+//    Servidor servidor = Servidor();
+//    servidor.iniciar();
 
 //    auto *lista = new LinkedList<Song*>();
 //    Song* song = new Song("Hola","Marcos","Que suena","Rock","../Music/",2014);

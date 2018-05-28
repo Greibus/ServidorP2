@@ -8,15 +8,31 @@
 void SaveJson::saveInFile(int type, json json1) {
 
     std::ofstream file;
-    file.open("../.metadata/users.json", std::ofstream::out | std::ofstream::trunc);
-    file.open("../.metadata/music.json", std::ofstream::out | std::ofstream::trunc);
-    file.close();
 
     if ( type == 0 ) {
         file.open("../.metadata/users.json", std::ios::binary | std::ios::out);
     } else if ( type == 1 ) {
         file.open("../.metadata/music.json", std::ios::binary | std::ios::out);
     }
+    file.clear();
     file << json1;
     file.close();
+}
+
+json SaveJson::getInFile(int type) {
+    std::ifstream file;
+
+    if ( type == 0 ) {
+        file.open("../.metadata/users.json",std::ios::in);
+    } else if ( type == 1 ) {
+        file.open("../.metadata/music.json",std::ios::in);
+    }
+
+    json j = json::parse(file);
+
+    std::cout<< j<<std::endl;;
+
+    file.close();
+    return j;
+
 }

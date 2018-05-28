@@ -169,5 +169,10 @@ void LinkedList<T>::editIn(int pos,T num) {
     }
 }
 
+template<class T>
+void LinkedList<T>::setCount(int counter) {
+    this->counter = counter;
+}
+
 template class LinkedList<Song*>;
 template class LinkedList<std::string>;

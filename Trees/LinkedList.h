@@ -90,6 +90,8 @@ public:
      * @brief Recibe el valor para modificar en la lista.
      */
     void editIn(int pos, T num);
+
+    void setCount(int counter);
 };
 
 #endif //LINKEDLIST_H

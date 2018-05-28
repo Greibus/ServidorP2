@@ -5,6 +5,7 @@
 #ifndef SERVIDORP2_SONGMANAGER_H
 #define SERVIDORP2_SONGMANAGER_H
 
+#include <cppcodec/base32_rfc4648.hpp>
 #include "../Trees/BTree.h"
 #include "../Trees/AVLTree.h"
 #include "../Sort/BubbleSort.h"
@@ -17,6 +18,7 @@
 #include "../Json/SaveJson.h"
 
 using json = nlohmann::json;
+using base64 = cppcodec::base32_rfc4648;
 
 struct index {
     string value;
@@ -29,8 +31,10 @@ private:
     RadixSort artistSort;
     BubbleSort albumSort;
 
-    SaveJson saveJson;
+    Song *actualSong;
 
+    base64 base;
+    SaveJson saveJson;
     LinkedList<Song*> *songs = new LinkedList<Song*>();
 
 //    BTree<index> *names = new BTree<index>();
@@ -50,9 +54,11 @@ public:
     LinkedList<Song*>* getByAlbum();
     LinkedList<Song*>* getByArtirst();
 
+    void getSong(std::string name);
+
     void drop();
 
-    void encoder();
+    void encoder(std::string b64file, std::string name);
 
     void saveSongs();
 
