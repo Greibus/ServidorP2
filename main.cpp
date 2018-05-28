@@ -15,9 +15,6 @@ using namespace std;
 
 int main(){
 
-    Hash hash1;
-    string contra = "Ogawa12345";
-    cout<< hash1.hash(contra);
 //    MusicManager *musicManager = new MusicManager();
 //    musicManager->init();
 //
@@ -25,9 +22,9 @@ int main(){
 //    musicManager->addNewSong("The House Of The Rising Sun");
 //    musicManager->saveSongs();
 
-//    std::cout << "Iniciando Servidor" << std::endl;
-//    Servidor servidor = Servidor();
-//    servidor.iniciar();
+    std::cout << "Iniciando Servidor" << std::endl;
+    Servidor servidor = Servidor();
+    servidor.iniciar();
 
 //    auto *lista = new LinkedList<Song*>();
 //    Song* song = new Song("Hola","Marcos","Que suena","Rock","../Music/",2014);
