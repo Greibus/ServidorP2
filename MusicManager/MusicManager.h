@@ -11,6 +11,7 @@
 #include "../Sort/BubbleSort.h"
 #include "../Sort/QuickSort.h"
 #include "../Sort/RadixSort.h"
+#include "../Sort/QuickSortA.h"
 #include "../Trees/LinkedList.h"
 #include "Song.h"
 #include <nlohmann/json.hpp>
@@ -29,7 +30,7 @@ struct index {
 class MusicManager {
 private:
     QuickSort nameSort;
-    RadixSort artistSort;
+    QuickSortA artistSort;
     BubbleSort albumSort;
 
     Decoder *decoder;

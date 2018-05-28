@@ -97,7 +97,7 @@ LinkedList<Song*>* MusicManager::getByAlbum() {
 
 LinkedList<Song*>* MusicManager::getByArtirst() {
     LinkedList<Song*> *temp = songs;
-
+    artistSort.quickSortA(temp,0,songs->getCount()-1);
     return temp;
 }
 
