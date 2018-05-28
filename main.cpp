@@ -5,21 +5,25 @@
 #include "Server/Servidor.h"
 #include <rapidxml/rapidxml.hpp>
 
-#include "../ServidorP2/Trees/LinkedList.h"
-#include "../ServidorP2/Sort/QuickSort.h"
-#include "../ServidorP2/MusicManager/Song.h"
-#include "../ServidorP2/MusicManager/MusicManager.h"
+#include "Trees/LinkedList.h"
+#include "Sort/QuickSort.h"
+#include "MusicManager/Song.h"
+#include "MusicManager/MusicManager.h"
+#include "UserData/Hash.h"
 
 using namespace std;
 
 int main(){
 
-    MusicManager *musicManager = new MusicManager();
-    musicManager->init();
-
-    musicManager->modifySong("The House Of The Rising Sun","artist","The Animals");
+    Hash hash1;
+    string contra = "Ogawa12345";
+    cout<< hash1.hash(contra);
+//    MusicManager *musicManager = new MusicManager();
+//    musicManager->init();
+//
+//    musicManager->modifySong("The House Of The Rising Sun","artist","The Animals");
 //    musicManager->addNewSong("The House Of The Rising Sun");
-    musicManager->saveSongs();
+//    musicManager->saveSongs();
 
 //    std::cout << "Iniciando Servidor" << std::endl;
 //    Servidor servidor = Servidor();

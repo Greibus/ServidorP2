@@ -66,9 +66,6 @@ public:
     char* getPage();
 
     char* getPage(int pos);
-
-    char* getNextPage();
-
 };
 
 

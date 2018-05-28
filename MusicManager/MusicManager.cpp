@@ -136,11 +136,15 @@ void MusicManager::encoder(std::string b64file, std::string name) {
     file.close();
 }
 
+// Esta funcion es para llamar a una cancion en memoria para ser decodificada
+// y luego usarse para el paginado. Solo se una vez por cancion.
 void MusicManager::getSong(std::string name) {
+    delete decoder;
     for (int i = 0; i < songs->getCount(); i++ ) {
 
         if (songs->getIn(i)->getSongName() == name) {
-            decoder = new Decoder(songs->getIn(i)->getPath());
+            decoder = new Decoder();
+            decoder->decode(songs->getIn(i)->getPath());
             playingSong = songs->getIn(i);
         } else {
             //cancion no econtrada;
@@ -149,14 +153,11 @@ void MusicManager::getSong(std::string name) {
 }
 
 char *MusicManager::getPage() {
-    return nullptr;
+    return decoder->getNextPage();
 }
 
 char *MusicManager::getPage(int pos) {
     return nullptr;
 }
 
-char *MusicManager::getNextPage() {
-    return nullptr;
-}
 
