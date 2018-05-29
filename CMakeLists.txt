@@ -11,7 +11,7 @@ mark_as_advanced(RapidXML_INCLUDE_DIR)
 
 if(RAPIDXML_FOUND)
     # provide import target:
-    add_library(RapidXML::RapidXML INTERFACE IMPORTED)
+    add_library(RapidXML::RapidXML INTERFACE IMPORTED Sort/QuickSortA.cpp Sort/QuickSortA.h)
     set_target_properties(RapidXML::RapidXML PROPERTIES INTERFACE_INCLUDE_DIRECTORIES ${RapidXML_INCLUDE_DIR})
 endif()
 
@@ -119,13 +119,13 @@ set(SOURCES
         MusicManager/Decoder.cpp
         MusicManager/Decoder.h
         MusicManager/MusicManager.h
-<<<<<<< Updated upstream
         MusicManager/MusicManager.cpp
-        UserData/Hash.cpp UserData/Hash.h Sort/QuickSortA.cpp Sort/QuickSortA.h)
-=======
-        MusicManager/MusicManager.h
+        UserData/Hash.cpp
+        UserData/Hash.h
+        Sort/QuickSortA.cpp
+        Sort/QuickSortA.h
         )
->>>>>>> Stashed changes
+
 
 #Se conecta con la libreria de mpg123
 include_directories(${MPG123_INCLUDE_DIRS})

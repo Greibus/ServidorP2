@@ -11,7 +11,6 @@
 class QuickSortA {
 public:
     void quickSortA(LinkedList<Song*> *array, int low, int high);
+
 };
 
-
-#endif //SERVIDORP2_QUICKSORTA_H
