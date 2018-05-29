@@ -108,23 +108,19 @@ avlNode<T> *AVLTree<T>::balance(avlNode<T> *temp)
 // Insert Element into the tree
 
 template <class T>
-avlNode<T> *AVLTree<T>::insert(avlNode<T> *root, T value)
-{
-    if (root == NULL)
-    {
+avlNode<T> *AVLTree<T>::insert(avlNode<T> *root, T value) {
+    if (root == NULL) {
         root = new avlNode<T>;
         root->data = value;
         root->left = NULL;
         root->right = NULL;
         return root;
     }
-    else if (value < root->data)
-    {
+    else if (value < root->data) {
         root->left = insert(root->left, value);
         root = balance (root);
     }
-    else if (value >= root->data)
-    {
+    else if (value >= root->data) {
         root->right = insert(root->right, value);
         root = balance (root);
     }

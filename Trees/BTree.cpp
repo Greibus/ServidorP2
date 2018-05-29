@@ -319,15 +319,15 @@ void BTree<T>::searching(T val, int *pos,btreeNode<T> *myNode) {
     return;
 }
 
-/* B-Tree Traversal */
-template<class T>
-void BTree<T>::traversal(btreeNode<T> *myNode) {
-    int i;
-    if (myNode) {
-        for (i = 0; i < myNode->count; i++) {
-            traversal(myNode->link[i]);
-            cout<< myNode->val[i + 1]<<' ';
-        }
-        traversal(myNode->link[i]);
-    }
-}
+//* B-Tree Traversal */
+//template<class T>
+//void BTree<T>::traversal(btreeNode<T> *myNode) {
+//    int i;
+//    if (myNode) {
+//        for (i = 0; i < myNode->count; i++) {
+//            traversal(myNode->link[i]);
+//            cout<< myNode->val[i + 1]<<' ';
+//        }
+//        traversal(myNode->link[i]);
+//    }
+//}

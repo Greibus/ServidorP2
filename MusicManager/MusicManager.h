@@ -22,11 +22,6 @@
 using json = nlohmann::json;
 using base64 = cppcodec::base32_rfc4648;
 
-struct index {
-    string value;
-    int pos;
-};
-
 class MusicManager {
 private:
     QuickSort nameSort;
@@ -39,9 +34,14 @@ private:
     SaveJson saveJson;
     LinkedList<Song*> *songs = new LinkedList<Song*>();
 
-//    BTree<index> *names = new BTree<index>();
-//    AVLTree<index> *artists = new AVLTree<index>();
-//    LinkedList<index> *albums = new LinkedList<index>();
+//    BTree<Song*> *names2 = new BTree<Song*>();
+//    AVLTree<Song*> *artists2 = new AVLTree<Song*>();
+
+    LinkedList<Song*> *names = new LinkedList<Song*>();
+    LinkedList<Song*> *artists = new LinkedList<Song*>();
+    LinkedList<Song*> *albums = new LinkedList<Song*>();
+
+    void makeTree();
 
 public:
     Song *playingSong;
@@ -52,7 +52,7 @@ public:
     void modifySong(std::string name, std::string type, std::string valor);
     void rateSong(float rate, std::string name);
     void deleteSong(std::string name);
-    void search(std::string, std::string);
+    Song *search(std::string, std::string);
 
     LinkedList<Song*>* getByName();
     LinkedList<Song*>* getByAlbum();

@@ -29,6 +29,7 @@ void MusicManager::init() {
         counter++;
     }
     songs->setCount(counter);
+    makeTree();
 }
 
 
@@ -36,6 +37,8 @@ void MusicManager::addNewSong(std::string name) {
     Song *newSong = new Song(name);
     newSong->setPath("../Musica/"+name+".mp3");
     songs->addLast(newSong);
+
+    makeTree();
 }
 
 void MusicManager::modifySong(std::string name, std::string type, std::string valor) {
@@ -59,6 +62,8 @@ void MusicManager::modifySong(std::string name, std::string type, std::string va
             //cancion no econtrada;
         }
     }
+
+    makeTree();
 }
 
 void MusicManager::rateSong(float rate, std::string name) {
@@ -70,6 +75,8 @@ void MusicManager::rateSong(float rate, std::string name) {
             //cancion no econtrada;
         }
     }
+
+    makeTree();
 }
 
 void MusicManager::deleteSong(std::string name) {
@@ -81,6 +88,8 @@ void MusicManager::deleteSong(std::string name) {
             //cancion no econtrada;
         }
     }
+
+    makeTree();
 }
 
 LinkedList<Song*>* MusicManager::getByName() {
@@ -118,18 +127,31 @@ void MusicManager::saveSongs() {
     saveJson.saveInFile(1,array);
 }
 
-void MusicManager::search(std::string type, std::string name) {
+Song* MusicManager::search(std::string type, std::string value) {
     if (type == "name") {
-
+        for (int co = 0; co < names->getCount(); co++) {
+            if (names->getIn(co)->getAlbum() == value) {
+                return names->getIn(co);
+            }
+        }
     } else if (type == "artist"){
-
+        for (int co = 0; co < artists->getCount(); co++) {
+            if (artists->getIn(co)->getAlbum() == value) {
+                return artists->getIn(co);
+            }
+        }
     } else if (type == "album") {
-
+        for (int co = 0; co < albums->getCount(); co++) {
+            if (albums->getIn(co)->getAlbum() == value) {
+                return albums->getIn(co);
+            }
+        }
     }
 }
 
 // funcion para reconstruir cancion que viene del cliente
 void MusicManager::encoder(std::string b64file, std::string name) {
+    addNewSong(name);
     std::vector<uint8_t> bytes = base.decode(b64file.c_str(), b64file.length());
     std::ofstream file("../Musica/" + name + ".mp3", std::ios::binary);
     file.write(reinterpret_cast<char*> (&bytes[0]), bytes.size() * sizeof(bytes[0]));
@@ -158,6 +180,18 @@ char *MusicManager::getPage() {
 
 char *MusicManager::getPage(int pos) {
     return nullptr;
+}
+
+void MusicManager::makeTree() {
+    delete names;
+    delete artists;
+    delete albums;
+
+    for (int j = 0; j < songs->getCount() ; j++){
+        names->addLast(songs->getIn(j));
+        artists->addLast(songs->getIn(j));
+        albums->addLast(songs->getIn(j));
+    }
 }
 
 

@@ -20,7 +20,7 @@ using namespace std;
 template <class T>
 struct avlNode
 {
-    int data;
+    T data;
     struct avlNode<T> *left;
     struct avlNode<T> *right;
 };
@@ -31,19 +31,16 @@ struct avlNode
 template <class T>
 class AVLTree {
 
-private:
-
-    avlNode<T> *root;
-
 public:
+    avlNode<T> *root;
     int height(avlNode<T> *);
     int diff(avlNode<T> *);
     avlNode<T> *rrRotation(avlNode<T> *);
     avlNode<T> *llRotation(avlNode<T> *);
     avlNode<T> *lrRotation(avlNode<T> *);
     avlNode<T> *rlRotation(avlNode<T> *);
-    avlNode<T>* balance(avlNode<T> *);
-    avlNode<T>* insert(avlNode<T> *, T );
+    avlNode<T> *balance(avlNode<T> *);
+    avlNode<T> *insert(avlNode<T> *, T );
     void display(avlNode<T> *, T);
     void inorder(avlNode<T> *);
     void preorder(avlNode<T> *);
