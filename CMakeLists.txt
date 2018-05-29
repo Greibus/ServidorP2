@@ -11,7 +11,7 @@ mark_as_advanced(RapidXML_INCLUDE_DIR)
 
 if(RAPIDXML_FOUND)
     # provide import target:
-    add_library(RapidXML::RapidXML INTERFACE IMPORTED Sort/QuickSortA.cpp Sort/QuickSortA.h)
+    add_library(RapidXML::RapidXML INTERFACE IMPORTED)
     set_target_properties(RapidXML::RapidXML PROPERTIES INTERFACE_INCLUDE_DIRECTORIES ${RapidXML_INCLUDE_DIR})
 endif()
 
@@ -131,13 +131,8 @@ set(SOURCES
 include_directories(${MPG123_INCLUDE_DIRS})
 link_directories(${MPG123_LIBRARY_DIRS})
 
-#
-#link_directories(/usr/local/lib/libb64.a)
-#link_directories(/usr/local/include/b64)
 
 add_executable(${CMAKE_PROJECT_NAME} ${SOURCES})
 
 #link librerias libmpg123
 TARGET_LINK_LIBRARIES(ServidorP2 ${MPG123_LIBRARIES})
-
-#TARGET_LINK_LIBRARIES(ServidorP2 /usr/local/lib/libb64.a)

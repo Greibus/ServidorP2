@@ -15,7 +15,6 @@ using namespace std;
 
 int main(){
 
-<<<<<<< Updated upstream
 //    MusicManager *musicManager = new MusicManager();
 //    musicManager->init();
 //
@@ -23,8 +22,6 @@ int main(){
 //    musicManager->addNewSong("The House Of The Rising Sun");
 //    musicManager->saveSongs();
 
-=======
->>>>>>> Stashed changes
     std::cout << "Iniciando Servidor" << std::endl;
     Servidor servidor = Servidor();
     servidor.iniciar();
