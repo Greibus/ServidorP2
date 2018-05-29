@@ -119,8 +119,13 @@ set(SOURCES
         MusicManager/Decoder.cpp
         MusicManager/Decoder.h
         MusicManager/MusicManager.h
+<<<<<<< Updated upstream
         MusicManager/MusicManager.cpp
         UserData/Hash.cpp UserData/Hash.h Sort/QuickSortA.cpp Sort/QuickSortA.h)
+=======
+        MusicManager/MusicManager.h
+        )
+>>>>>>> Stashed changes
 
 #Se conecta con la libreria de mpg123
 include_directories(${MPG123_INCLUDE_DIRS})

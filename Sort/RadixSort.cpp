@@ -1,7 +1,7 @@
 //
 // Created by tony on 09/05/18.
 //
-
+/*
 #include "RadixSort.h"
 #include <iostream>
 #include <queue>
@@ -47,6 +47,7 @@ using namespace std;
 //        arr[i] = output[i];
 //}
 
+<<<<<<< Updated upstream
 //// The main function to that sorts arr[] of size n using
 //// Radix Sort
 //void RadixSort::radixSort(LinkedList<Song *> *a, int length) {
@@ -59,3 +60,17 @@ using namespace std;
 //    for (int exp = 0; exp < m ; exp ++)
 //        countSort(a, length, exp);
 //}
+=======
+// The main function to that sorts arr[] of size n using
+// Radix Sort
+void RadixSort::radixSort(LinkedList<Song *> *a, int length) {
+    // Find the maximum number to know number of digits
+    long m = getMax(*a, length);
+
+    // Do counting sort for every digit. Note that instead
+    // of passing digit number, exp is passed. exp is 10^i
+    // where i is current digit number
+    for (int exp = 0; exp < m ; exp ++)
+        countSort(a, length, exp);
+}*/
+>>>>>>> Stashed changes
