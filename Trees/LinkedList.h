@@ -13,7 +13,7 @@
 template <class T>
 class LinkedList {
 private:
-    LLNode<T> *first;
+    LLNode<T> *first = nullptr;
     int counter = 0;
 
 public:

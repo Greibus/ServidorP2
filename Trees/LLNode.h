@@ -10,8 +10,8 @@
 template <class T> class LLNode {
 
 private:
-    T valor;
-    LLNode<T> *right;
+    T valor = nullptr;
+    LLNode<T> *right = nullptr;
 public:
     LLNode<T>();
     explicit LLNode<T>(T temp);

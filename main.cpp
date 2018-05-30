@@ -15,16 +15,17 @@ using namespace std;
 
 int main(){
 
-//    MusicManager *musicManager = new MusicManager();
-//    musicManager->init();
-//
-//    musicManager->modifySong("The House Of The Rising Sun","artist","The Animals");
-//    musicManager->addNewSong("The House Of The Rising Sun");
-//    musicManager->saveSongs();
+    MusicManager *musicManager = new MusicManager();
+    musicManager->init();
 
-    std::cout << "Iniciando Servidor" << std::endl;
-    Servidor servidor = Servidor();
-    servidor.iniciar();
+    musicManager->modifySong("The House Of The Rising Sun","artist","The Animals");
+    musicManager->addNewSong("The House Of The Rising Sun");
+    musicManager->addNewSong("Marika");
+    musicManager->saveSongs();
+
+//    std::cout << "Iniciando Servidor" << std::endl;
+//    Servidor servidor = Servidor();
+//    servidor.iniciar();
 
     return 0;
 

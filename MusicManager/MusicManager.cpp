@@ -5,7 +5,7 @@
 #include "MusicManager.h"
 
 void MusicManager::init() {
-    int counter;
+    int counter = 0;
     json json1 = saveJson.getInFile(1);
     for (int i = 0; i< json1.size(); i++) {
         json songjson = json1[i];
@@ -26,6 +26,7 @@ void MusicManager::init() {
         newSong->setAlbum(album);
         newSong->setArtist(artist);
         newSong->setLyrics(lyric);
+        songs->addLast(newSong);
         counter++;
     }
     songs->setCount(counter);
@@ -37,7 +38,7 @@ void MusicManager::addNewSong(std::string name) {
     Song *newSong = new Song(name);
     newSong->setPath("../Musica/"+name+".mp3");
     songs->addLast(newSong);
-
+    saveSongs();
     makeTree();
 }
 
@@ -62,7 +63,7 @@ void MusicManager::modifySong(std::string name, std::string type, std::string va
             //cancion no econtrada;
         }
     }
-
+    saveSongs();
     makeTree();
 }
 
@@ -75,7 +76,7 @@ void MusicManager::rateSong(float rate, std::string name) {
             //cancion no econtrada;
         }
     }
-
+    saveSongs();
     makeTree();
 }
 
@@ -88,7 +89,7 @@ void MusicManager::deleteSong(std::string name) {
             //cancion no econtrada;
         }
     }
-
+    saveSongs();
     makeTree();
 }
 
@@ -187,11 +188,13 @@ void MusicManager::makeTree() {
     delete artists;
     delete albums;
 
+    names = new LinkedList<Song*>();
+    artists = new LinkedList<Song*>();
+    albums = new LinkedList<Song*>();
+
     for (int j = 0; j < songs->getCount() ; j++){
         names->addLast(songs->getIn(j));
         artists->addLast(songs->getIn(j));
         albums->addLast(songs->getIn(j));
     }
 }
-
-
