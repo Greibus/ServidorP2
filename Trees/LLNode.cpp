@@ -6,6 +6,7 @@
 
 template<class T>
 LLNode<T>::LLNode() {
+    valor = nullptr;
     right = nullptr;
 }
 
