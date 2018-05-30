@@ -48,7 +48,7 @@ public:
 
     void init();
 
-    void addNewSong(std::string name);
+    std::string addNewSong(std::string name);
     void modifySong(std::string name, std::string type, std::string valor);
     void rateSong(float rate, std::string name);
     void deleteSong(std::string name);
@@ -60,7 +60,7 @@ public:
 
     void getSong(std::string name);
 
-    void encoder(std::string b64file, std::string name);
+    std::string encoder(std::string b64file, std::string name);
 
     void saveSongs();
 

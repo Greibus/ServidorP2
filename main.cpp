@@ -18,9 +18,9 @@ int main(){
     MusicManager *musicManager = new MusicManager();
     musicManager->init();
 
-    musicManager->modifySong("The House Of The Rising Sun","artist","The Animals");
-    musicManager->addNewSong("The House Of The Rising Sun");
-    musicManager->addNewSong("Marika");
+    musicManager->modifySong("Marika","artist","Maricones");
+//    musicManager->addNewSong("The House Of The Rising Sun");
+//    musicManager->addNewSong("Marika");
     musicManager->saveSongs();
 
 //    std::cout << "Iniciando Servidor" << std::endl;

@@ -31,6 +31,8 @@ char *Decoder::getNextPage() {
 //        std::cout << *tst << std::endl;
 //        std::cout << totalBytes << std::endl;
         return buffertf;
+    } else {
+        return;
     }
 }
 

@@ -30,8 +30,6 @@ json SaveJson::getInFile(int type) {
 
     json j = json::parse(file);
 
-    std::cout<< j<<std::endl;;
-
     file.close();
     return j;
 

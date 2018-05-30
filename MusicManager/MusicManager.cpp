@@ -9,7 +9,6 @@ void MusicManager::init() {
     json json1 = saveJson.getInFile(1);
     for (int i = 0; i< json1.size(); i++) {
         json songjson = json1[i];
-        std::cout<< songjson <<std::endl;
         std::string name = songjson["name"];
         std::string path = songjson["path"];
         std::string genre = songjson["genre"];
@@ -34,12 +33,18 @@ void MusicManager::init() {
 }
 
 
-void MusicManager::addNewSong(std::string name) {
+std::string MusicManager::addNewSong(std::string name) {
+    for (int i = 0; i < songs->getCount(); i++ ) {
+        if (songs->getIn(i)->getSongName() == name) {
+            return "false";
+        }
+    }
     Song *newSong = new Song(name);
     newSong->setPath("../Musica/"+name+".mp3");
     songs->addLast(newSong);
     saveSongs();
     makeTree();
+    return "true";
 }
 
 void MusicManager::modifySong(std::string name, std::string type, std::string valor) {
@@ -151,18 +156,23 @@ Song* MusicManager::search(std::string type, std::string value) {
 }
 
 // funcion para reconstruir cancion que viene del cliente
-void MusicManager::encoder(std::string b64file, std::string name) {
-    addNewSong(name);
-    std::vector<uint8_t> bytes = base.decode(b64file.c_str(), b64file.length());
-    std::ofstream file("../Musica/" + name + ".mp3", std::ios::binary);
-    file.write(reinterpret_cast<char*> (&bytes[0]), bytes.size() * sizeof(bytes[0]));
-    file.close();
+std::string MusicManager::encoder(std::string b64file, std::string name) {
+    if (addNewSong(name) == "true"){
+        std::vector<uint8_t> bytes = base.decode(b64file.c_str(), b64file.length());
+        std::ofstream file("../Musica/" + name + ".mp3", std::ios::binary);
+        file.write(reinterpret_cast<char*> (&bytes[0]), bytes.size() * sizeof(bytes[0]));
+        file.close();
+        return "true";
+    } else {
+        return "false";
+    }
 }
 
 // Esta funcion es para llamar a una cancion en memoria para ser decodificada
 // y luego usarse para el paginado. Solo se una vez por cancion.
 void MusicManager::getSong(std::string name) {
     delete decoder;
+    decoder = new Decoder();
     for (int i = 0; i < songs->getCount(); i++ ) {
 
         if (songs->getIn(i)->getSongName() == name) {
