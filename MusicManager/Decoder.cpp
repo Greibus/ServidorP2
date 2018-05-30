@@ -32,7 +32,7 @@ char *Decoder::getNextPage() {
 //        std::cout << totalBytes << std::endl;
         return buffertf;
     } else {
-        return;
+        return "false";
     }
 }
 
@@ -47,11 +47,21 @@ char *Decoder::getPage(int byte) {
     char *buffertf;
 
 //    while (mpg123_read(mh, buffer, buffer_size, &done) == MPG123_OK) {
-    if(mpg123_read(mh, buffer, buffer_size, &done) == MPG123_OK) {
-        buffertf = reinterpret_cast<char *>(buffer);
+//    if(mpg123_read(mh, buffer, buffer_size, &done) == MPG123_OK) {
+//        buffertf = reinterpret_cast<char *>(buffer);
 //        short *tst = reinterpret_cast<short *>(buffer);
 //        std::cout << *tst << std::endl;
 //        std::cout << totalBytes << std::endl;
+//        return buffertf;
+//    }
+
+    if (mpg123_seek_frame(mh,byte/mpg123_outblock(mh),SEEK_SET)>= 0) {
+
+//    while (mpg123_read(mh, buffer, buffer_size, &done) == MPG123_OK) {
+        mpg123_read(mh, buffer, buffer_size, 0);
+        char *buffertf = reinterpret_cast<char *>(buffer);
         return buffertf;
+//        short *tst = reinterpret_cast<short *>(buffer);
+
     }
 }
