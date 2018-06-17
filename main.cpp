@@ -5,27 +5,32 @@
 #include "Server/Servidor.h"
 #include <rapidxml/rapidxml.hpp>
 
-#include "Trees/BTree.h"
-#include "Sort/QuickSort.h"
-#include "MusicManager/Song.h"
+#include "XML/XmlParser.h"
 #include "MusicManager/MusicManager.h"
-#include "UserData/Hash.h"
-
-using namespace std;
+#include "MusicManager/Song.h"
 
 int main(){
 
-    MusicManager *musicManager = new MusicManager();
-    musicManager->init();
+//    Song *song = new Song("Calea");
+//    song->setArtist("Madonna");
+//    song->setAlbum("loquillos");
+//    song->setGenre("Rock");
+//    song->setYear(1999);
+//    song->setRate(1.2);
+//
+//    XmlParser xmlParser;
+//    std::cout<<xmlParser.xmlWrite(song) << std::endl;
+//
+//    MusicManager *musicManager = new MusicManager();
+//    musicManager->init();
+//    std::cout<<xmlParser.xmlWrite(musicManager->getByName()) << std::endl;
+//
+//    musicManager->getSong("The House Of The Rising Sun");
+//    std::cout<<xmlParser.xmlWrite(musicManager->getPage(),0,0,0,0,0);
 
-    musicManager->modifySong("Marika","artist","Maricones");
-//    musicManager->addNewSong("The House Of The Rising Sun");
-//    musicManager->addNewSong("Marika");
-    musicManager->saveSongs();
-
-//    std::cout << "Iniciando Servidor" << std::endl;
-//    Servidor servidor = Servidor();
-//    servidor.iniciar();
+    std::cout << "Iniciando Servidor" << std::endl;
+    Servidor servidor = Servidor();
+    servidor.iniciar();
 
     return 0;
 

@@ -8,15 +8,25 @@
 #include "../UserData/LinkedListUser.cpp"
 #include "../Json/SaveJson.h"
 #include "../MusicManager/MusicManager.h"
+#include "../UserData/Hash.h"
+#include "../Raid5/Controller/Controller.h"
 
 using namespace std;
 string prueba = "";
 LinkedListUser<string> listaUser = LinkedListUser<string>();
 SaveJson data = SaveJson();
-//SongManager manager = SongManager();
+MusicManager manager = MusicManager();
 json jsonUser;
 json songs;
+Hash hash1 = Hash();
+Controller controller = Controller();
 
+//AGREGAR DEL JSON A LA LISTA CUANDO INICIA EL SERVER
+
+/*
+void archivoBakcUp(json jsonUser){
+    jsonUser.;
+}*/
 /**
  * Inicializa el servidor
  */
@@ -27,7 +37,7 @@ void Servidor::iniciar() {
     }
     servidor.sin_family = AF_INET;
     servidor.sin_addr.s_addr = INADDR_ANY;
-    servidor.sin_port = htons(9090);
+    servidor.sin_port = htons(8080);
     if (bind(sock, (struct sockaddr *) &servidor, sizeof(servidor)) < 0) {
         cout << "Error: No se pudo iniciar el servidor" << endl;
     }
@@ -91,54 +101,103 @@ void *Servidor::hiloConexion(void *socket) {
         //limpio += "hola";
         //write(sockPtr, limpio.c_str(), limpio.length());
 
+        //------------Parsero de string a xml--------------
+//        rapidxml::xml_document<> doc;
+//        ofstream file;
+//        file.open("/home/tony/CLionProjects/almacenar.xml", ios::out);
+//        if (file.fail()) {
+//            cout << "NO SE CREO" << endl;
+//        }
+//        file << limpio << endl;
+//        file.close();
+//        ifstream myfile("/home/tony/CLionProjects/almacenar.xml");
+//        //"Read file into vector<char>"  See linked thread above
+//        vector<char> buffer((istreambuf_iterator<char>(myfile)), istreambuf_iterator<char>( ));
+//        buffer.push_back('\0');
+//        cout<<&buffer[0]<<endl; //test the buffer
+//        doc.parse<0>(&buffer[0]);
+        //-------------------------------------------------------------------------------------
+
+        //****************************Nuevo parseo string xml*******************
         rapidxml::xml_document<> doc;
-        ofstream file;
-        file.open("/home/tony/CLionProjects/almacenar.xml", ios::out);
-        if (file.fail()) {
-            cout << "NO SE CREO" << endl;
-        }
-        file << limpio << endl;
-        file.close();
-        ifstream myfile("/home/tony/CLionProjects/almacenar.xml");
-        //"Read file into vector<char>"  See linked thread above
-        vector<char> buffer((istreambuf_iterator<char>(myfile)), istreambuf_iterator<char>( ));
-        buffer.push_back('\0');
-        cout<<&buffer[0]<<endl; //test the buffer
-        doc.parse<0>(&buffer[0]);
+        char* cstr = new char[limpio.size() + 1];  // Create char buffer to store string copy
+        strcpy (cstr, limpio.c_str());             // Copy string into char buffer
+        doc.parse<0>(cstr);                     // Pass the non-const char* to parse()
+        //**********************************************************************
+
+
         //test the xml_document
         string nombre = doc.first_node()->name();
+
         if (nombre == "EnviarCancion"){
-            string nombreCancion = doc.first_node()->first_node()->first_attribute()->value();
-            string generoCancion = doc.first_node()->first_node()->next_sibling()->first_attribute()->value();
-            string anoCancion = doc.first_node()->first_node()->next_sibling()->first_attribute()->next_attribute()->value();
-            string albumCancion = doc.first_node()->first_node()->next_sibling()->first_attribute()->next_attribute()->next_attribute()->next_attribute()->value();
-            string letraCancion = doc.first_node()->first_node()->next_sibling()->first_attribute()->next_attribute()->next_attribute()->next_attribute()->next_attribute()->value();
-            string crudoCancion = doc.first_node()->first_node()->next_sibling()->next_sibling()->first_attribute()->value();
-            //manager.addNewSong(nombreCancion);
+            string albumCancion = doc.first_node()->first_node()->first_attribute()->value();
+            string anoCancion = doc.first_node()->first_node()->first_attribute()->next_attribute()->value();
+            string crudoCancion = doc.first_node()->first_node()->first_attribute()->next_attribute()->next_attribute()->value();
+            string generoCancion =doc.first_node()->first_node()->first_attribute()->next_attribute()->next_attribute()->next_attribute()->value();
+            string letraCancion = doc.first_node()->first_node()->first_attribute()->next_attribute()->next_attribute()->next_attribute()->next_attribute()->value();
+            string nombreCancion =doc.first_node()->first_node()->first_attribute()->next_attribute()->next_attribute()->next_attribute()->next_attribute()->next_attribute()->value();
+            string pathCancion = doc.first_node()->first_node()->first_attribute()->next_attribute()->next_attribute()->next_attribute()->next_attribute()->next_attribute()->next_attribute()->value();
+
+
+
+            controller.saveF(pathCancion, nombreCancion);
+
+
+
+            manager.addNewSong(nombreCancion);
+            /*manager.encoder(crudoCancion, nombreCancion);*/
             songs = {{"Nombre", nombreCancion} ,{"genero", generoCancion},{"año",anoCancion},{"Album",albumCancion},{"Letra",letraCancion},{"crude",crudoCancion}};
-            data.saveInFile(1, songs);
-        } else if(nombre == "EnviarUsuarios") {
-            string user = doc.first_node()->first_node()->first_attribute()->value();
+            //manager->saveSongs();
+            string data = "true\n";
+            write(sockPtr, data.c_str(), data.length());
+            //data.saveInFile(1, songs);
+        } else if(nombre == "VerificarUsuarios") {
+            //string user = doc.first_node()->first_node()->first_attribute()->next_attribute()->next_attribute()->next_attribute()->next_attribute()->next_attribute()->next_attribute()->value();
+            string user = doc.first_node()->first_node()->first_attribute()->next_attribute()->next_attribute()->next_attribute()->next_attribute()->value();
             if (!listaUser.search(user)){
-                string name = doc.first_node()->first_node()->first_attribute()->next_attribute()->value();
-                string lastName = doc.first_node()->first_node()->first_attribute()->next_attribute()->next_attribute()->value();
-                string age = doc.first_node()->first_node()->first_attribute()->next_attribute()->next_attribute()->next_attribute()->value();
-                string genders = doc.first_node()->first_node()->first_attribute()->next_attribute()->next_attribute()->next_attribute()->next_attribute()->value();
-                string password = doc.first_node()->first_node()->first_attribute()->next_attribute()->next_attribute()->next_attribute()->next_attribute()->next_attribute()->value();
-                string friends = doc.first_node()->first_node()->first_attribute()->next_attribute()->next_attribute()->next_attribute()->next_attribute()->next_attribute()->next_attribute()->value();
-                listaUser.addLast(user, name, lastName, age, genders, password, friends);
+                string age = doc.first_node()->first_node()->first_attribute()->value();
+                string genders = doc.first_node()->first_node()->first_attribute()->next_attribute()->value();
+                string name = doc.first_node()->first_node()->first_attribute()->next_attribute()->next_attribute()->value();
+                string password = doc.first_node()->first_node()->first_attribute()->next_attribute()->next_attribute()->next_attribute()->value();
+                listaUser.addLast(user, name, "", age, genders, hash1.hash(password), "");
                 jsonUser.push_back(listaUser.toJson());
                 data.saveInFile(0, jsonUser);
                 cout << "JSON USER ES " << jsonUser << endl;
-                string datoUser = "Usuario registrado\n";
+                string datoUser = "true\n";
                 write(sockPtr,datoUser.c_str(), datoUser.length());
                 jsonUser.clear();
             } else {
-                string datoUser = "Elija otro usuario\n";
+                string datoUser = "false\n";
                 write(sockPtr,datoUser.c_str(), datoUser.length());
             }
+        } else if(nombre == "EnviarUsuarios") {
+            string user = doc.first_node()->first_node()->first_attribute()->next_attribute()->value();
+            if (listaUser.search(user)) {
+                string password = doc.first_node()->first_node()->first_attribute()->value();
+                if (listaUser.verifyPass(user, hash1.hash(password))) {
+                    string datoUser = "true\n";
+                    write(sockPtr, datoUser.c_str(), datoUser.length());
+
+                } else {
+                    string datoUser = "false\n";
+                    write(sockPtr, datoUser.c_str(), datoUser.length());
+                }
+            } else {
+                string datoUser = "false\n";
+                write(sockPtr, datoUser.c_str(), datoUser.length());
+            }
         }
-        remove("/home/tony/CLionProjects/almacenar.xml");
+        if (read_size == 0) {
+            cout << "Error: Cliente desconectado" << endl;
+            fflush(stdout);
+        } else if (read_size == -1) {
+            cout << "Error: No se recibio un dato valido" << endl;
+        }
+        //---------------------------------------------------------
+//        remove("/home/tony/CLionProjects/almacenar.xml");
+        //---------------------------------------------------------
+
+        delete [] cstr;
     }
 
     if (read_size == 0) {

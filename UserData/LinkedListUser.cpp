@@ -24,26 +24,44 @@ void LinkedListUser<T>::addLast(T user, T name,T lastName, T age, T genders, T p
 }
 
 template<class T>
-bool LinkedListUser<T>::search(T user) {
-    if (isEmpty()){
-        return  false;
+bool LinkedListUser<T>::verifyPass(T user, T password) {
+    if (isEmpty() || !search(user)) {
+        return false;
     } else {
         NodeUser<T> *head = first;
-        if(first->getUser() == user){
-            return true;
-        }
-        while(head->ptrNext != nullptr){
-            if (head->getUser() == user){
-                return true;
-            }else {
+        while (head != nullptr) {
+            if (head->getUser() == user) {
+                if (head->getPassword() == password) {
+                    return true;
+                } else {
+                    return false;
+                }
+            } else {
                 head = head->ptrNext;
             }
 
         }
         return false;
-
     }
 }
+template<class T>
+bool LinkedListUser<T>::search(T user) {
+    if (isEmpty()){
+        return  false;
+    } else {
+        NodeUser<T> *head = first;
+        while(head != nullptr) {
+            if (head->getUser() == user) {
+                return true;
+            } else {
+                head = head->ptrNext;
+            }
+        }
+        return false;
+    }
+
+}
+
 
 template <class T>
 void LinkedListUser<T>::delUser(T user){
