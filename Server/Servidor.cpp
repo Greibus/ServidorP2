@@ -91,20 +91,31 @@ void *Servidor::hiloConexion(void *socket) {
         //limpio += "hola";
         //write(sockPtr, limpio.c_str(), limpio.length());
 
+        //------------Parsero de string a xml--------------
+//        rapidxml::xml_document<> doc;
+//        ofstream file;
+//        file.open("/home/tony/CLionProjects/almacenar.xml", ios::out);
+//        if (file.fail()) {
+//            cout << "NO SE CREO" << endl;
+//        }
+//        file << limpio << endl;
+//        file.close();
+//        ifstream myfile("/home/tony/CLionProjects/almacenar.xml");
+//        //"Read file into vector<char>"  See linked thread above
+//        vector<char> buffer((istreambuf_iterator<char>(myfile)), istreambuf_iterator<char>( ));
+//        buffer.push_back('\0');
+//        cout<<&buffer[0]<<endl; //test the buffer
+//        doc.parse<0>(&buffer[0]);
+        //-------------------------------------------------------------------------------------
+
+        //****************************Nuevo parseo string xml*******************
         rapidxml::xml_document<> doc;
-        ofstream file;
-        file.open("/home/tony/CLionProjects/almacenar.xml", ios::out);
-        if (file.fail()) {
-            cout << "NO SE CREO" << endl;
-        }
-        file << limpio << endl;
-        file.close();
-        ifstream myfile("/home/tony/CLionProjects/almacenar.xml");
-        //"Read file into vector<char>"  See linked thread above
-        vector<char> buffer((istreambuf_iterator<char>(myfile)), istreambuf_iterator<char>( ));
-        buffer.push_back('\0');
-        cout<<&buffer[0]<<endl; //test the buffer
-        doc.parse<0>(&buffer[0]);
+        char* cstr = new char[limpio.size() + 1];  // Create char buffer to store string copy
+        strcpy (cstr, limpio.c_str());             // Copy string into char buffer
+        doc.parse<0>(cstr);                     // Pass the non-const char* to parse()
+        //**********************************************************************
+
+
         //test the xml_document
         string nombre = doc.first_node()->name();
         if (nombre == "EnviarCancion"){
@@ -138,7 +149,12 @@ void *Servidor::hiloConexion(void *socket) {
                 write(sockPtr,datoUser.c_str(), datoUser.length());
             }
         }
-        remove("/home/tony/CLionProjects/almacenar.xml");
+
+        //---------------------------------------------------------
+//        remove("/home/tony/CLionProjects/almacenar.xml");
+        //---------------------------------------------------------
+
+        delete [] cstr;
     }
 
     if (read_size == 0) {

@@ -124,7 +124,7 @@ set(SOURCES
         UserData/Hash.h
         Sort/QuickSortA.cpp
         Sort/QuickSortA.h
-        )
+        XML/XmlParser.cpp XML/XmlParser.h)
 
 
 #Se conecta con la libreria de mpg123

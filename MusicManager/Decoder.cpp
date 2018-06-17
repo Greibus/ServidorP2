@@ -14,11 +14,11 @@ void Decoder::decode(std::string name) {
     mpg123_open(mh, name.c_str());
     mpg123_getformat(mh, &rate, &channels, &encoding);
 
-    totalBytes = mpg123_length(mh) * 4;
+    totalBytes = static_cast<int>(mpg123_length(mh) * 4);
     m_bits = mpg123_encsize(encoding) * BITS;
     m_rate = rate;
     m_channels = channels;
-    m_buffer = buffer_size;
+    m_buffer = static_cast<int>(buffer_size);
 }
 
 char *Decoder::getNextPage() {
@@ -64,4 +64,24 @@ char *Decoder::getPage(int byte) {
 //        short *tst = reinterpret_cast<short *>(buffer);
 
     }
+}
+
+int Decoder::getTotalBytes() const {
+    return totalBytes;
+}
+
+int Decoder::getM_bits() const {
+    return m_bits;
+}
+
+long Decoder::getM_rate() const {
+    return m_rate;
+}
+
+int Decoder::getM_channels() const {
+    return m_channels;
+}
+
+int Decoder::getM_buffer() const {
+    return m_buffer;
 }

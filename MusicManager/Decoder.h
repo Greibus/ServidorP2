@@ -26,7 +26,7 @@ private:
 public:
     int totalBytes;
     int m_bits;
-    int m_rate;
+    long m_rate;
     int m_channels;
     int m_buffer;
 
@@ -36,6 +36,16 @@ public:
     void decode(std::string name);
     char* getNextPage();
     char* getPage(int byte);
+
+    int getTotalBytes() const;
+
+    int getM_bits() const;
+
+    long getM_rate() const;
+
+    int getM_channels() const;
+
+    int getM_buffer() const;
 };
 
 
