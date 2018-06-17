@@ -7,24 +7,26 @@
 
 int main()
 {
-    string str = "geeks for geeks";
+    string str = "<Message><jsonMsg> this is an example for huffman encoding </jsonMsg> </Message>";
     string encodedString, decodedString;
 
     HuffmanDecoder huffDecoder;
 
+    cout<< "to encode: " << str << endl;
 
-    huffDecoder.calcFreq(str, str.length());
-    huffDecoder.HuffmanCodes(str.length());
-    cout << "Character With their Frequencies:\n";
-    for (auto v=huffDecoder.codes.begin(); v!=huffDecoder.codes.end(); v++)
-        cout << v->first <<' ' << v->second << endl;
 
-    for (auto i: str)
-        encodedString+=huffDecoder.codes[i];
+    // transforma string a codigo huffman
+    encodedString = huffDecoder.Encode(str);
+
+
+    // tranforma codigo huffman a string
+    decodedString = huffDecoder.Decode(encodedString);
+
+
+
+
 
     cout << "\nEncoded Huffman data:\n" << encodedString << endl;
-
-    decodedString = huffDecoder.decode_file(huffDecoder.minHeap.top(), encodedString);
     cout << "\nDecoded Huffman Data:\n" << decodedString << endl;
 
 

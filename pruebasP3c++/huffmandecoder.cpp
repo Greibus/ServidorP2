@@ -77,7 +77,7 @@ string HuffmanDecoder::decode_file(struct MinHeapNode* root, string s)
             curr = root;
         }
     }
-    // cout<<ans<<endl;
+    //cout<<ans<<endl;
     return ans+'\0';
 }
 
@@ -94,4 +94,54 @@ void HuffmanDecoder::printCodes(struct MinHeapNode* root, string str)
         cout << root->data << ": " << str << "\n";
     printCodes(root->left, str + "0");
     printCodes(root->right, str + "1");
+}
+
+
+
+
+string HuffmanDecoder::Encode(string toEncode)
+{
+
+    string encodedString;
+
+    // calcula frecuencias de cada caracter y crea el hashmap de frecuencias
+    calcFreq(toEncode, toEncode.length());
+
+
+    // calcula el hashmap con los codigos huffman de cada caracter
+    HuffmanCodes(toEncode.length());
+
+
+    for (auto i: toEncode)
+        encodedString+=codes[i];
+
+
+    return encodedString;
+}
+
+
+
+
+string HuffmanDecoder::Decode(string toDecode)
+{
+
+    string decodedString;
+
+    decodedString = decode_file(minHeap.top(), toDecode);
+
+    return decodedString;
+
+
+
+}
+
+void HuffmanDecoder::xmlToCodes()
+{
+
+}
+
+
+string HuffmanDecoder::codesToXml()
+{
+
 }

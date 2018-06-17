@@ -4,6 +4,7 @@
 #include <bits/stdc++.h>
 #include <stdio.h>
 
+
 using namespace std;
 
 
@@ -67,6 +68,15 @@ public:
 
     void printCodes(struct MinHeapNode* root, string str);
 
+
+    string Encode(string toEncode);
+
+    string Decode(string toDecode);
+
+
+    void xmlToCodes();
+
+    string codesToXml();
 
 };
 
