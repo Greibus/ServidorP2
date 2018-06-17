@@ -22,6 +22,7 @@ private:
 public:
     void addLast(T user, T name, T lastName, T age, T genders, T password, T friends);
     bool search(T user);
+    bool verifyPass(T user, T password);
     void delUser(T user);
     void delIn(int pos);
     json toJson();

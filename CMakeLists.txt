@@ -124,7 +124,11 @@ set(SOURCES
         UserData/Hash.h
         Sort/QuickSortA.cpp
         Sort/QuickSortA.h
-        XML/XmlParser.cpp XML/XmlParser.h)
+        XML/XmlParser.cpp XML/XmlParser.h
+        Raid5/Controller/Controller.h
+        Raid5/Controller/Controller.cpp
+        Raid5/File/File.h
+        Raid5/File/File.cpp)
 
 
 #Se conecta con la libreria de mpg123
