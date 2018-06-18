@@ -10,5 +10,8 @@ std::string Hash::hash(std::string code) {
     for (int i = 0; i < size ; i+=2){
         hashed += code[i];
     }
+    for (int i = 1; i < size ; i+=2){
+        hashed += code[i];
+    }
     return hashed;
 }
