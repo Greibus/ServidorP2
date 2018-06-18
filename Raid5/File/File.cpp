@@ -5,6 +5,11 @@
 #include <zconf.h>
 #include <pwd.h>
 #include <bitset>
+#include <dirent.h>
+#include <sstream>
+#include <string>
+#include <cstring>
+
 
 #include "File.h"
 
@@ -350,5 +355,39 @@ void File::deleteFile(char *filename) {
     remove((char*)path1->c_str() );
     remove((char*)path2->c_str() );
     remove((char*)path3->c_str() );
+
+}
+
+
+bool File::existFile(char *filename, int number) {
+
+    struct passwd *pw = getpwuid(getuid());
+    std::string homedirectory = pw->pw_dir;
+    const char *name = filename;
+    std::string nameString = filename;
+    std::string nameStrinPrueba = name;
+    if(number == 1) {
+        homedirectory.append("/RAID5/Disk 1/");
+        homedirectory.append(nameString);
+    } else if(number == 2){
+        homedirectory.append("/RAID5/Disk 2/");
+        homedirectory.append(nameString);
+    } else if (number == 3){
+        homedirectory.append("/RAID5/Disk 3/");
+        homedirectory.append(nameString);
+    }
+
+    DIR *pDir;
+    //std::cout<<homedirectory<<std::endl;
+    bool FlagExist = false;
+    //pDir = opendir (homedirectory.c_str());
+    char *y = new char[homedirectory.length() + 1]; // or
+    std::strcpy(y, homedirectory.c_str());
+    FILE *archivo = fopen(y, "rb");
+    if (archivo != NULL) {
+        FlagExist = true;
+        fclose(archivo);
+    }
+    return FlagExist;
 
 }

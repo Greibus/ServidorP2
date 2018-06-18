@@ -128,7 +128,12 @@ set(SOURCES
         Raid5/Controller/Controller.h
         Raid5/Controller/Controller.cpp
         Raid5/File/File.h
-        Raid5/File/File.cpp)
+        Raid5/File/File.cpp
+        Huffman/huffmandecoder.h
+        Huffman/huffmandecoder.cpp
+        Huffman/pugiconfig.hpp
+        Huffman/pugixml.cpp
+        Huffman/pugixml.hpp)
 
 
 #Se conecta con la libreria de mpg123
