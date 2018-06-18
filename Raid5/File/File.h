@@ -64,6 +64,7 @@ public:
     static char* seekFile(string filename);
     static void deleteFile(char* filename);
     static void createFile3(char*file1);
+    static bool existFile(char *filename, int number);
 
 };
 
