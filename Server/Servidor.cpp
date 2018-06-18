@@ -7,7 +7,6 @@
 #include <rapidxml/rapidxml.hpp>
 #include "../UserData/LinkedListUser.cpp"
 #include "../Json/SaveJson.h"
-#include "../MusicManager/MusicManager.h"
 #include "../UserData/Hash.h"
 #include "../Raid5/Controller/Controller.h"
 
@@ -15,7 +14,7 @@ using namespace std;
 string prueba = "";
 LinkedListUser<string> listaUser = LinkedListUser<string>();
 SaveJson data = SaveJson();
-MusicManager manager = MusicManager();
+MusicManager *manager = new MusicManager();
 json jsonUser;
 json songs;
 Hash hash1 = Hash();
@@ -144,7 +143,7 @@ void *Servidor::hiloConexion(void *socket) {
 
 
 
-            manager.addNewSong(nombreCancion);
+            manager->addNewSong(nombreCancion);
             /*manager.encoder(crudoCancion, nombreCancion);*/
             songs = {{"Nombre", nombreCancion} ,{"genero", generoCancion},{"año",anoCancion},{"Album",albumCancion},{"Letra",letraCancion},{"crude",crudoCancion}};
             //manager->saveSongs();
