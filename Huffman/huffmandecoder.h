@@ -4,8 +4,12 @@
 #include <bits/stdc++.h>
 #include <stdio.h>
 
+#include "pugixml.hpp"
+
 
 using namespace std;
+
+using namespace pugi;
 
 
 
@@ -74,7 +78,7 @@ public:
     string Decode(string toDecode);
 
 
-    void xmlToCodes();
+    void xmlToCodes(string xmlString);
 
     string codesToXml();
 

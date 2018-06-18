@@ -102,6 +102,10 @@ void HuffmanDecoder::printCodes(struct MinHeapNode* root, string str)
 string HuffmanDecoder::Encode(string toEncode)
 {
 
+    freq.clear();
+
+    codes.clear();
+
     string encodedString;
 
     // calcula frecuencias de cada caracter y crea el hashmap de frecuencias
@@ -121,22 +125,92 @@ string HuffmanDecoder::Encode(string toEncode)
 
 
 
-
 string HuffmanDecoder::Decode(string toDecode)
 {
 
-    string decodedString;
+    /*string decodedString;
 
     decodedString = decode_file(minHeap.top(), toDecode);
 
-    return decodedString;
+    return decodedString;*/
 
 
+    string output = "";
+    string tempStr = "";
+
+
+    cout<<"to decode : " << toDecode << endl;
+
+    if(!codes.empty()){
+
+        for(char& c : toDecode) {
+
+            tempStr += c;
+
+
+
+            for ( auto it = codes.begin(); it != codes.end(); ++it  )
+            {
+
+                if(tempStr.compare(it->second) == 0)
+                {
+
+
+                    output += it->first;
+                    tempStr ="";
+                }
+
+                //std::cout << it->first << '\t' << it->second << std::endl;
+            }
+
+        }
+        return output;
+    }
 
 }
 
-void HuffmanDecoder::xmlToCodes()
+void HuffmanDecoder::xmlToCodes(string xmlString)
 {
+    codes.clear();
+
+    xml_document doc;
+
+
+    doc.load_string(xmlString.c_str());
+
+    xml_node msg = doc.child("message");
+
+    for (pugi::xml_node character: msg.children())
+    {
+        //cout << child.name()<<" elemento: " << child.child("key").value() << ", " << child.child("code").value()<< endl;
+        cout<< "key: " <<character.child("key").child_value() << endl;
+        cout<< "code: " <<character.child("code").child_value() << endl;
+
+
+        string key = string(character.child("key").child_value()).c_str();
+        string code = string(character.child("code").child_value());
+
+        if (key == "_"){
+            codes.insert(std::pair<char, string>(' ', code));
+        } else {
+            codes.insert( std::pair<char, string>(key.at(0), code));
+        }
+
+
+
+
+
+
+
+
+
+        for ( auto it = codes.begin(); it != codes.end(); ++it  )
+        {
+           std::cout << it->first << '\t' << it->second << std::endl;
+        }
+    }
+
+
 
 }
 

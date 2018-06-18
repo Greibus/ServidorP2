@@ -42,6 +42,8 @@ public:
     static std::string cleanMensaje(char*);
 
     void saveData(json, int);
+
+    void getInformation(std::string name);
 };
 
 

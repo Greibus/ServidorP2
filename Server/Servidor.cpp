@@ -10,6 +10,8 @@
 #include "../MusicManager/MusicManager.h"
 #include "../UserData/Hash.h"
 #include "../Raid5/Controller/Controller.h"
+#include "../Huffman/huffmandecoder.h"
+#include "../Raid5/File/File.h"
 
 using namespace std;
 string prueba = "";
@@ -20,7 +22,10 @@ json jsonUser;
 json songs;
 Hash hash1 = Hash();
 Controller controller = Controller();
-
+File file1 = File();
+HuffmanDecoder huffDecoder = HuffmanDecoder();
+bool arbol = false;
+string userConnected;
 //AGREGAR DEL JSON A LA LISTA CUANDO INICIA EL SERVER
 
 /*
@@ -58,6 +63,7 @@ void Servidor::iniciar() {
     }
 }
 
+
 /**
  * Elimina posibles ruidos en los mensajes y recorta el mensaje utiizando el delimitador
  * @param men
@@ -75,6 +81,10 @@ string Servidor::cleanMensaje(char* men) {
     return temp;
 }
 
+void addSong(string album, string artist, string genre, string lyris, string name, string path, string rating, string year){
+
+}
+
 /**
  * Se encarga de manejar individualmente cada cliente conectado
  * @param socket
@@ -83,7 +93,7 @@ string Servidor::cleanMensaje(char* men) {
 void *Servidor::hiloConexion(void *socket) {
     int sockPtr = *(int *) socket;
     int read_size;
-    char client_message[1000000];
+    char client_message[10000000];
     string limpio;
 
     //Forma correcta de enviar datos
@@ -94,110 +104,121 @@ void *Servidor::hiloConexion(void *socket) {
       //  cout << "Error: No se pudo enviar el dato" << endl;
     //}
 
-    while ((read_size = recv(sockPtr, client_message, 1000, 0)) > 0) {
+    while ((read_size = recv(sockPtr, client_message, 1000000, 0)) > 0) {
         limpio = cleanMensaje(client_message);
+        cout << "CONTENIDO" << endl;
         cout << limpio << endl;
-        //Repetidor de mensajes y enviar
-        //limpio += "hola";
-        //write(sockPtr, limpio.c_str(), limpio.length());
-
-        //------------Parsero de string a xml--------------
-//        rapidxml::xml_document<> doc;
-//        ofstream file;
-//        file.open("/home/tony/CLionProjects/almacenar.xml", ios::out);
-//        if (file.fail()) {
-//            cout << "NO SE CREO" << endl;
-//        }
-//        file << limpio << endl;
-//        file.close();
-//        ifstream myfile("/home/tony/CLionProjects/almacenar.xml");
-//        //"Read file into vector<char>"  See linked thread above
-//        vector<char> buffer((istreambuf_iterator<char>(myfile)), istreambuf_iterator<char>( ));
-//        buffer.push_back('\0');
-//        cout<<&buffer[0]<<endl; //test the buffer
-//        doc.parse<0>(&buffer[0]);
-        //-------------------------------------------------------------------------------------
-
-        //****************************Nuevo parseo string xml*******************
-        rapidxml::xml_document<> doc;
-        char* cstr = new char[limpio.size() + 1];  // Create char buffer to store string copy
-        strcpy (cstr, limpio.c_str());             // Copy string into char buffer
-        doc.parse<0>(cstr);                     // Pass the non-const char* to parse()
-        //**********************************************************************
 
 
-        //test the xml_document
-        string nombre = doc.first_node()->name();
+        if (arbol) {
 
-        if (nombre == "EnviarCancion"){
-            string albumCancion = doc.first_node()->first_node()->first_attribute()->value();
-            string anoCancion = doc.first_node()->first_node()->first_attribute()->next_attribute()->value();
-            string crudoCancion = doc.first_node()->first_node()->first_attribute()->next_attribute()->next_attribute()->value();
-            string generoCancion =doc.first_node()->first_node()->first_attribute()->next_attribute()->next_attribute()->next_attribute()->value();
-            string letraCancion = doc.first_node()->first_node()->first_attribute()->next_attribute()->next_attribute()->next_attribute()->next_attribute()->value();
-            string nombreCancion =doc.first_node()->first_node()->first_attribute()->next_attribute()->next_attribute()->next_attribute()->next_attribute()->next_attribute()->value();
-            string pathCancion = doc.first_node()->first_node()->first_attribute()->next_attribute()->next_attribute()->next_attribute()->next_attribute()->next_attribute()->next_attribute()->value();
+
+            string decodeMessage = huffDecoder.Decode(limpio);
+            cout << limpio << endl;
+            arbol = false;
+            //****************************Nuevo parseo string xml*******************
+            rapidxml::xml_document<> doc;
+            char* cstr = new char[decodeMessage.size() + 1];  // Create char buffer to store string copy
+            strcpy (cstr, decodeMessage.c_str());             // Copy string into char buffer
+            doc.parse<0>(cstr);                     // Pass the non-const char* to parse()
+            //**********************************************************************
+
+
+            //test the xml_document
+            string nombre = doc.first_node()->name();
+
+            if (nombre == "EnviarCancion"){
+                string albumCancion = doc.first_node()->first_node()->first_attribute()->value();
+                string anoCancion = doc.first_node()->first_node()->first_attribute()->next_attribute()->value();
+                string crudoCancion = doc.first_node()->first_node()->first_attribute()->next_attribute()->next_attribute()->value();
+                string generoCancion =doc.first_node()->first_node()->first_attribute()->next_attribute()->next_attribute()->next_attribute()->value();
+                string letraCancion = doc.first_node()->first_node()->first_attribute()->next_attribute()->next_attribute()->next_attribute()->next_attribute()->value();
+                string nombreCancion =doc.first_node()->first_node()->first_attribute()->next_attribute()->next_attribute()->next_attribute()->next_attribute()->next_attribute()->value();
+                string pathCancion = doc.first_node()->first_node()->first_attribute()->next_attribute()->next_attribute()->next_attribute()->next_attribute()->next_attribute()->next_attribute()->value();
 
 
 
-            controller.saveF(pathCancion, nombreCancion);
+                controller.saveF(pathCancion, nombreCancion);
 
 
 
-            manager.addNewSong(nombreCancion);
-            /*manager.encoder(crudoCancion, nombreCancion);*/
-            songs = {{"Nombre", nombreCancion} ,{"genero", generoCancion},{"año",anoCancion},{"Album",albumCancion},{"Letra",letraCancion},{"crude",crudoCancion}};
-            //manager->saveSongs();
-            string data = "true\n";
-            write(sockPtr, data.c_str(), data.length());
-            //data.saveInFile(1, songs);
-        } else if(nombre == "VerificarUsuarios") {
-            //string user = doc.first_node()->first_node()->first_attribute()->next_attribute()->next_attribute()->next_attribute()->next_attribute()->next_attribute()->next_attribute()->value();
-            string user = doc.first_node()->first_node()->first_attribute()->next_attribute()->next_attribute()->next_attribute()->next_attribute()->value();
-            if (!listaUser.search(user)){
-                string age = doc.first_node()->first_node()->first_attribute()->value();
-                string genders = doc.first_node()->first_node()->first_attribute()->next_attribute()->value();
-                string name = doc.first_node()->first_node()->first_attribute()->next_attribute()->next_attribute()->value();
-                string password = doc.first_node()->first_node()->first_attribute()->next_attribute()->next_attribute()->next_attribute()->value();
-                listaUser.addLast(user, name, "", age, genders, hash1.hash(password), "");
-                jsonUser.push_back(listaUser.toJson());
-                data.saveInFile(0, jsonUser);
-                cout << "JSON USER ES " << jsonUser << endl;
-                string datoUser = "true\n";
-                write(sockPtr,datoUser.c_str(), datoUser.length());
-                jsonUser.clear();
-            } else {
-                string datoUser = "false\n";
-                write(sockPtr,datoUser.c_str(), datoUser.length());
-            }
-        } else if(nombre == "EnviarUsuarios") {
-            string user = doc.first_node()->first_node()->first_attribute()->next_attribute()->value();
-            if (listaUser.search(user)) {
-                string password = doc.first_node()->first_node()->first_attribute()->value();
-                if (listaUser.verifyPass(user, hash1.hash(password))) {
+                manager.addNewSong(nombreCancion);
+                /*manager.encoder(crudoCancion, nombreCancion);*/
+                songs = {{"Nombre", nombreCancion} ,{"genero", generoCancion},{"año",anoCancion},{"Album",albumCancion},{"Letra",letraCancion},{"crude",crudoCancion}};
+                manager.saveSongs();
+                string data = "true\n";
+                write(sockPtr, data.c_str(), data.length());
+                //data.saveInFile(1, songs);
+            } else if(nombre == "VerificarUsuarios") {
+                //string user = doc.first_node()->first_node()->first_attribute()->next_attribute()->next_attribute()->next_attribute()->next_attribute()->next_attribute()->next_attribute()->value();
+                string user = doc.first_node()->first_node()->first_attribute()->next_attribute()->next_attribute()->next_attribute()->next_attribute()->value();
+                if (!listaUser.search(user)){
+                    string age = doc.first_node()->first_node()->first_attribute()->value();
+                    string genders = doc.first_node()->first_node()->first_attribute()->next_attribute()->value();
+                    string name = doc.first_node()->first_node()->first_attribute()->next_attribute()->next_attribute()->value();
+                    string password = doc.first_node()->first_node()->first_attribute()->next_attribute()->next_attribute()->next_attribute()->value();
+                    listaUser.addLast(user, name, "", age, genders, hash1.hash(password), "");
+                    jsonUser.push_back(listaUser.toJson());
+                    data.saveInFile(0, jsonUser);
+                    cout << "JSON USER ES " << jsonUser << endl;
                     string datoUser = "true\n";
-                    write(sockPtr, datoUser.c_str(), datoUser.length());
+                    write(sockPtr,datoUser.c_str(), datoUser.length());
+                    jsonUser.clear();
+                } else {
+                    string datoUser = "false\n";
+                    write(sockPtr,datoUser.c_str(), datoUser.length());
+                }
+            } else if(nombre == "EnviarUsuarios") {
+                string user = doc.first_node()->first_node()->first_attribute()->next_attribute()->value();
+                if (listaUser.search(user)) {
+                    string password = doc.first_node()->first_node()->first_attribute()->value();
+                    if (listaUser.verifyPass(user, hash1.hash(password))) {
+                        userConnected = user;
+                        string datoUser = "true\n";
+                        write(sockPtr, datoUser.c_str(), datoUser.length());
 
+                    } else {
+                        string datoUser = "false\n";
+                        write(sockPtr, datoUser.c_str(), datoUser.length());
+                    }
                 } else {
                     string datoUser = "false\n";
                     write(sockPtr, datoUser.c_str(), datoUser.length());
                 }
-            } else {
-                string datoUser = "false\n";
+            } else if (nombre == "EnviarPlay") {
+                controller.CheckDisks();
+                string datoUser = "true\n";
                 write(sockPtr, datoUser.c_str(), datoUser.length());
-            }
-        }
-        if (read_size == 0) {
-            cout << "Error: Cliente desconectado" << endl;
-            fflush(stdout);
-        } else if (read_size == -1) {
-            cout << "Error: No se recibio un dato valido" << endl;
-        }
-        //---------------------------------------------------------
-//        remove("/home/tony/CLionProjects/almacenar.xml");
-        //---------------------------------------------------------
+            } else if (nombre == "EnviarVideo") {
+                string nombreVideo = doc.first_node()->first_node()->first_attribute()->value();
+                string pathVideo = doc.first_node()->first_node()->first_attribute()->next_attribute()->value();
+                controller.saveF(pathVideo, nombreVideo);
+                string datoUser = "true\n";
+                write(sockPtr, datoUser.c_str(), datoUser.length());
 
-        delete [] cstr;
+            }
+            if (read_size == 0) {
+                cout << "Error: Cliente desconectado" << endl;
+                fflush(stdout);
+            } else if (read_size == -1) {
+                cout << "Error: No se recibio un dato valido" << endl;
+            }
+            //---------------------------------------------------------
+//        remove("/home/tony/CLionProjects/almacenar.xml");
+            //---------------------------------------------------------
+
+            delete [] cstr;
+
+        } else {
+            huffDecoder.xmlToCodes(limpio);
+            cout << huffDecoder.Decode(limpio) << endl;
+            string datoUser = "recibido\n";
+            write(sockPtr, datoUser.c_str(), datoUser.length());
+            arbol = true;
+        }
+
+
+
     }
 
     if (read_size == 0) {
@@ -211,3 +232,71 @@ void *Servidor::hiloConexion(void *socket) {
 void Servidor::saveData(json json1, int cond) {
     saveJson.saveInFile(cond, json1);
 }
+
+void Servidor::getInformation(string name){
+    const char *stringChar = name.c_str();
+    string album;
+    string rating;
+    string namex ;
+    string genero;
+    string year;
+    string lyris;
+    string artist;
+    string friends = "";
+    string path = "";
+    if(name == "Kansas - Dust in the Wind - Point of Know Return") {
+        string namex = "Dust in the Wind";
+        string rating = "5";
+        string album = "Point of Know Return";
+        string genero = "Soft Rock";
+        string year = "1997";
+        string lyris = "TEC Deiber, [17.06.18 22:51]"
+                       "I close my eyes"
+                       "Only for a moment"
+                       "And the moment's gone"
+                       "All my dreams"
+                       "Pass before my eyes, in curiosity"
+                       "Dust in the wind";
+        string artist = "Kansas";
+        //songs = {{"album", album} ,{"artist", artist},{"genre",genero},{"lyric",lyris},{"name",namex},{"path",path},{"rate",rating},{"year",year}};
+        addSong(album, artist, genero, lyris, namex, path, rating, year);
+    }else if(name == "Switchfoot - Awakening - Oh! Gravity"){
+        string namex = "Awakening";
+        string rating = "4";
+        string album = "Oh! Gravity";
+        string genero = "Rock-Pop";
+        string year = "2006";
+        string lyris = "Face down with the LA curbside endings "
+                       "And the ones in zeros."
+                       "Downtown was the perfect place to hide."
+                       "The first star that I saw last night was a headlight";
+        string artist = "Switchfoot";
+        addSong(album, artist, genero, lyris, namex, path, rating, year);
+    }else if(name == "The Lumineers - Ophelia - Cleopatra"){
+        string namex = "Ophelia";
+        string rating = "4";
+        string album = "Cleopatra";
+        string genero = "Folk";
+        string year = "2016";
+        string lyris = "Oh, oh, when I was younger, oh, oh, should have known better"
+                       "And I can't feel no remorse, and you don't feel nothing back"
+                       "Oh, oh, got a new girlfriend, he feels like he's on top"
+                       "And I don't feel no remorse, and you can't see past my blinders";
+        string artist = "The Luminners";
+        addSong(album, artist, genero, lyris, namex, path, rating, year);
+    }else if (name == "The Paper Kites - Bloom - Woodland - EP"){
+        string namex = "Bloom";
+        string rating = "5";
+        string album = "Woodland";
+        string genero = "Folk";
+        string year = "2011";
+        string lyris = "Take a trip into my garden"
+                       "I've got so much to show ya"
+                       "The fountains and the waters"
+                       "Are begging just to know ya";
+        string artist = "The Paper Kites";
+        addSong(album, artist, genero, lyris, namex, path, rating, year);
+    }
+
+}
+

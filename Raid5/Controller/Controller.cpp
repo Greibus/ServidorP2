@@ -165,6 +165,8 @@ void Controller::saveF(string path, string filename) {
         stringChar = "/home/tony/Escritorio/Songs/The Lumineers - Ophelia.mp3";
     else if (filename == "The Paper Kites - Bloom - Woodland - EP")
         stringChar = "/home/tony/Escritorio/Songs/The Paper Kites - Bloom.mp3";
+    else if (filename == "profe")
+        stringChar = "/home/tony/Escritorio/videos/profe.mp4";
     FILE *iFile =  fopen(stringChar, "rb");
     fseek(iFile, 0, SEEK_END);
     long lSize = ftell(iFile);
