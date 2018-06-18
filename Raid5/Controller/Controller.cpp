@@ -7,33 +7,12 @@
 
 #include "Controller.h"
 #include "../File/File.h"
-/*
-bool Controller::FirstTime() {
+string path1 = "/home/tony/Escritorio/Songs/Kansas - Dust in the Wind.mp3";
+string path2 = "/home/tony/Escritorio/Songs/Switchfoot - Awakening.mp3";
+string path3 = "/home/tony/Escritorio/Songs/The Lumineers - Ophelia.mp3";
+string path4 = "/home/tony/Escritorio/Songs/The Paper Kites - Bloom.mp3";
+string path5 = "/home/tony/Escritorio/videos/profe.mp4";
 
-    struct passwd *pw = getpwuid(getuid());
-    std::string homedirectory = pw->pw_dir;
-    homedirectory.append("/Disk 1");
-    std::string homedirectory2 = pw->pw_dir;
-    homedirectory2.append("/Disk 2");
-    std::string homedirectory3 = pw->pw_dir;
-    homedirectory3.append("/Disk 3");
-    DIR * pDir1,*pDir2,*pDir3;
-    pDir1 = opendir (homedirectory.c_str());
-    pDir2 = opendir(homedirectory2.c_str());
-    pDir3 = opendir(homedirectory3.c_str());
-    bool existe = false;
-
-    if(pDir1 != NULL&& pDir2!=NULL&&pDir3!=NULL) {
-
-        existe = true;
-        (void) closedir (pDir1);
-        (void) closedir (pDir2);
-        (void) closedir (pDir3);
-
-    }
-    return existe;
-
-}*/
 
 /**
  * Revisa si el disco existe.
@@ -71,6 +50,8 @@ bool Controller::existDisk(int number) {
  * Revisa si existen los discos, si no existen se crean.
  */
 void Controller::CheckDisks() {
+
+
 
     bool ExistDisk1= existDisk(1);
     bool ExistDisk2 = existDisk(2);
@@ -166,7 +147,7 @@ void Controller::saveF(string path, string filename) {
     else if (filename == "The Paper Kites - Bloom - Woodland - EP")
         stringChar = "/home/tony/Escritorio/Songs/The Paper Kites - Bloom.mp3";
     else if (filename == "profe")
-        stringChar = "/home/tony/Escritorio/videos/profe.mp4";
+        stringChar = "/home/tony/Escritorio/Songs/profe.mp4";
     FILE *iFile =  fopen(stringChar, "rb");
     fseek(iFile, 0, SEEK_END);
     long lSize = ftell(iFile);
