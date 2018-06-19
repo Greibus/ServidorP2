@@ -17,7 +17,7 @@ using namespace std;
 string prueba = "";
 LinkedListUser<string> listaUser = LinkedListUser<string>();
 SaveJson data = SaveJson();
-MusicManager manager = MusicManager();
+MusicManager *manager = new MusicManager();
 json jsonUser;
 json songs;
 Hash hash1 = Hash();
@@ -45,13 +45,14 @@ void archivoBakcUp(json jsonUser){
  * Inicializa el servidor
  */
 void Servidor::iniciar() {
+    manager->init();
     sock = socket(AF_INET, SOCK_STREAM, 0);
     if (sock == -1) {
         printf("Error: No se puede crear el socket");
     }
     servidor.sin_family = AF_INET;
     servidor.sin_addr.s_addr = INADDR_ANY;
-    servidor.sin_port = htons(8080);
+    servidor.sin_port = htons(9090);
     if (bind(sock, (struct sockaddr *) &servidor, sizeof(servidor)) < 0) {
         cout << "Error: No se pudo iniciar el servidor" << endl;
     }
@@ -112,8 +113,8 @@ void *Servidor::hiloConexion(void *socket) {
     //if (io < 0) {
     //  cout << "Error: No se pudo enviar el dato" << endl;
     //}
-
-    while ((read_size = recv(sockPtr, client_message, 10000, 0)) > 0) {
+    while ((read_size = recv(sockPtr, client_message, 100000, 0)) > 0) {
+    bzero(client_message,100000);
         limpio = cleanMensaje(client_message);
         cout << "CONTENIDO" << endl;
         cout << limpio << endl;
@@ -164,8 +165,8 @@ void *Servidor::hiloConexion(void *socket) {
                 /*manager.encoder(crudoCancion, nombreCancion);*/
                 songs = {{"Nombre", nombreCancion},
                          {"genero", generoCancion},
-                         {"año",    anoCancion},
                          {"Album",  albumCancion},
+                         {"año",    anoCancion},
                          {"Letra",  letraCancion},
                          {"crude",  crudoCancion}};
                 manager.saveSongs();
@@ -306,10 +307,11 @@ void *Servidor::hiloConexion(void *socket) {
 
         } else {
             huffDecoder.xmlToCodes(limpio);
-            cout << huffDecoder.Decode(limpio) << endl;
+            bzero(client_message, 100000);
             string datoUser = "recibido\n";
             write(sockPtr, datoUser.c_str(), datoUser.length());
             arbol = true;
+            limpio = "";
         }
 
 
