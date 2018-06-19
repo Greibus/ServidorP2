@@ -16,7 +16,6 @@
 #include <string>
 #include <pthread.h>
 #include "../Json/SaveJson.h"
-#include "../MusicManager/MusicManager.h"
 
 static char delimitador = '*';
 

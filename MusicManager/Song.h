@@ -15,7 +15,7 @@ private:
     std::string lyrics;
     std::string path;
     std::string genre;
-    int rate;
+    float rate;
     int year;
 
 public:
@@ -36,9 +36,9 @@ public:
 
     void setPath(const std::string &path);
 
-    int getRate() const;
+    float getRate() const;
 
-    void setRate(int rate);
+    void setRate(float rate);
 
     const std::string &getSongName() const;
 

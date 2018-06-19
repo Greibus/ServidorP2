@@ -24,12 +24,11 @@ using base64 = cppcodec::base32_rfc4648;
 
 class MusicManager {
 private:
-
     QuickSort nameSort;
     QuickSortA artistSort;
     BubbleSort albumSort;
 
-    Decoder *decoder = nullptr;
+    Decoder *decoder;
 
     base64 base;
     SaveJson saveJson;
@@ -45,19 +44,13 @@ private:
     void makeTree();
 
 public:
-    int totalBytes;
-    int m_bits;
-    long m_rate;
-    int m_channels;
-    size_t m_buffer;
-
-    Song *playingSong = nullptr;
+    Song *playingSong;
 
     void init();
 
     std::string addNewSong(std::string name);
     void modifySong(std::string name, std::string type, std::string valor);
-    void rateSong(int rate, std::string name);
+    void rateSong(float rate, std::string name);
     void deleteSong(std::string name);
     Song *search(std::string, std::string);
 

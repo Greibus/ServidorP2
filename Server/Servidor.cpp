@@ -17,9 +17,10 @@ using namespace std;
 string prueba = "";
 LinkedListUser<string> listaUser = LinkedListUser<string>();
 SaveJson data = SaveJson();
-MusicManager *manager = new MusicManager();
+MusicManager manager = MusicManager();
 json jsonUser;
 json songs;
+
 Hash hash1 = Hash();
 Controller controller = Controller();
 File file1 = File();
@@ -45,14 +46,13 @@ void archivoBakcUp(json jsonUser){
  * Inicializa el servidor
  */
 void Servidor::iniciar() {
-    manager->init();
     sock = socket(AF_INET, SOCK_STREAM, 0);
     if (sock == -1) {
         printf("Error: No se puede crear el socket");
     }
     servidor.sin_family = AF_INET;
     servidor.sin_addr.s_addr = INADDR_ANY;
-    servidor.sin_port = htons(9090);
+    servidor.sin_port = htons(8080);
     if (bind(sock, (struct sockaddr *) &servidor, sizeof(servidor)) < 0) {
         cout << "Error: No se pudo iniciar el servidor" << endl;
     }
@@ -106,25 +106,18 @@ void *Servidor::hiloConexion(void *socket) {
     char client_message[100000];
     string limpio;
 
-    //Forma correcta de enviar datos
-    //string dato = "USUARIO Regist" + delimitador; //delimitador
-    //int io = write(sockPtr, dato.c_str(), dato.length());
-    //write(sockPtr, dato.c_str(),dato.length());
-    //if (io < 0) {
-    //  cout << "Error: No se pudo enviar el dato" << endl;
-    //}
-    while ((read_size = recv(sockPtr, client_message, 100000, 0)) > 0) {
     bzero(client_message,100000);
+    while ((read_size = recv(sockPtr, client_message, 100000, 0)) > 0) {
         limpio = cleanMensaje(client_message);
         cout << "CONTENIDO" << endl;
         cout << limpio << endl;
-
+        cout << huffDecoder.datareload(2) << endl;
 
         if (arbol) {
-
-
+            cout << huffDecoder.datareload(3) << endl;
+            cout << huffDecoder.datareload(1) << endl;
             string decodeMessage = huffDecoder.Decode(limpio);
-            cout << limpio << endl;
+            //cout << decodeMessage << endl;
             arbol = true;
             //****************************Nuevo parseo string xml*******************
             rapidxml::xml_document<> doc;
@@ -165,8 +158,8 @@ void *Servidor::hiloConexion(void *socket) {
                 /*manager.encoder(crudoCancion, nombreCancion);*/
                 songs = {{"Nombre", nombreCancion},
                          {"genero", generoCancion},
-                         {"Album",  albumCancion},
                          {"año",    anoCancion},
+                         {"Album",  albumCancion},
                          {"Letra",  letraCancion},
                          {"crude",  crudoCancion}};
                 manager.saveSongs();
@@ -394,4 +387,6 @@ void Servidor::getInformation(string name) {
     }
 
 }
+
+
 

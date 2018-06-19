@@ -25,11 +25,11 @@ bool Controller::existDisk(int number) {
     std::string homedirectory = pw->pw_dir;
 
     if(number == 1) {
-        homedirectory.append("/RAID5/Disk 1");
+        homedirectory.append("/RAID5/Disco 1");
     } else if(number == 2){
-        homedirectory.append("/RAID5/Disk 2");
+        homedirectory.append("/RAID5/Disco 2");
     } else if (number == 3){
-        homedirectory.append("/RAID5/Disk 3");
+        homedirectory.append("/RAID5/Disco 3");
     }
 
     DIR *pDir;

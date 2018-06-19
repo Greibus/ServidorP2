@@ -4,11 +4,16 @@
 
 #include "XmlParser.h"
 
-template <typename T> std::string tostr(const T& t) {
-    std::ostringstream os;
-    os<<t;
-    return os.str();
-}
+//xml_document<> XmlParser::xmlRead(std::string str) {
+//    xml_document<> doc;
+//    char* cstr = new char[str.size() + 1];  // Create char buffer to store string copy
+//    strcpy (cstr, str.c_str());             // Copy string into char buffer
+//    doc.parse<0>(cstr);                     // Pass the non-const char* to parse()
+//    // Do stuff with parsing
+//
+//    return doc;
+//    delete [] cstr;  // free buffer memory when all is finished
+//}
 
 std::string XmlParser::xmlWrite(LinkedList<Song *> *list, int low, int high) {
     xml_document<> doc;
@@ -47,8 +52,8 @@ std::string XmlParser::xmlWrite(LinkedList<Song *> *list, int low, int high) {
         artist->value(actual->getArtist().c_str());
         album->value(actual->getAlbum().c_str());
         genre->value(actual->getGenre().c_str());
-        rate->value(tostr(actual->getRate()).c_str());
-        year->value(tostr(actual->getYear()).c_str());
+        rate->value(std::to_string(actual->getRate()).c_str());
+        year->value(std::to_string(actual->getYear()).c_str());
 
         child->append_node(name);
         child->append_node(artist);
@@ -89,8 +94,8 @@ std::string XmlParser::xmlWrite(Song *actual) {
     artist->value(actual->getArtist().c_str());
     album->value(actual->getAlbum().c_str());
     genre->value(actual->getGenre().c_str());
-    rate->value(tostr(actual->getRate()).c_str());
-    year->value(tostr(actual->getYear()).c_str());
+    rate->value(std::to_string(actual->getRate()).c_str());
+    year->value(std::to_string(actual->getYear()).c_str());
 
     child->append_node(name);
     child->append_node(artist);
@@ -109,7 +114,7 @@ std::string XmlParser::xmlWrite(Song *actual) {
 }
 
 std::string XmlParser::xmlWrite(char *buffering, int totalBytes, int bits,
-                                long rate, int channels, size_t buffer) {
+                                long rate, int channels, int buffer) {
     xml_document<> doc;
     xml_node<>* decl = doc.allocate_node(node_declaration);
     decl->append_attribute(doc.allocate_attribute("version", "1.0"));
@@ -127,12 +132,11 @@ std::string XmlParser::xmlWrite(char *buffering, int totalBytes, int bits,
     xml_node<>* channel = doc.allocate_node(node_element, "Channels");
     xml_node<>* buff = doc.allocate_node(node_element, "Buffer");
 
-    totalB->value(tostr(totalBytes).c_str(),tostr(totalBytes).size());
-    std::cout<<tostr(totalBytes).c_str()<<std::endl;
-    bit->value(tostr(bits).c_str());
-    rateN->value(tostr(rate).c_str());
-    channel->value(tostr(channels).c_str());
-    buff->value(tostr(buffer).c_str());
+    totalB->value(std::to_string(totalBytes).c_str());
+    bit->value(std::to_string(bits).c_str());
+    rateN->value(std::to_string(rate).c_str());
+    channel->value(std::to_string(channels).c_str());
+    buff->value(std::to_string(buffer).c_str());
 
     format->append_node(totalB);
     format->append_node(bit);
@@ -146,8 +150,8 @@ std::string XmlParser::xmlWrite(char *buffering, int totalBytes, int bits,
     xml_node<>* name = doc.allocate_node(node_element, "Name");
     xml_node<>* page = doc.allocate_node(node_element, "Page");
 
-    name->value("hola");
-//    page->value(const_cast<char*>(reinterpret_cast<short*>(buffering)),buffer*2);
+    name->value();
+    page->value(buffering);
 
     child->append_node(name);
     child->append_node(page);
@@ -188,8 +192,8 @@ std::string XmlParser::xmlWrite(LinkedList<Song *> *list) {
         artist->value(actual->getArtist().c_str());
         album->value(actual->getAlbum().c_str());
         genre->value(actual->getGenre().c_str());
-        rate->value(tostr(actual->getRate()).c_str());
-        year->value(tostr(actual->getYear()).c_str());
+        rate->value(std::to_string(actual->getRate()).c_str());
+        year->value(std::to_string(actual->getYear()).c_str());
 
         child->append_node(name);
         child->append_node(artist);
