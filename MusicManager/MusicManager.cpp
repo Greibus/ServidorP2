@@ -168,16 +168,12 @@ Song* MusicManager::search(std::string type, std::string value) {
 }
 
 // funcion para reconstruir cancion que viene del cliente
-std::string MusicManager::encoder(std::string b64file, std::string name) {
-    if (addNewSong(name) == "true"){
+void MusicManager::encoder(std::string b64file, std::string name) {
+//    if (addNewSong(name) == "true"){
         std::vector<uint8_t> bytes = base.decode(b64file.c_str(), b64file.length());
         std::ofstream file("../Musica/" + name + ".mp3", std::ios::binary);
         file.write(reinterpret_cast<char*> (&bytes[0]), bytes.size() * sizeof(bytes[0]));
         file.close();
-        return "true";
-    } else {
-        return "false";
-    }
 }
 
 // Esta funcion es para llamar a una cancion en memoria para ser decodificada

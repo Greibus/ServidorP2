@@ -17,10 +17,10 @@
 using namespace std;
 string prueba = "";
 LinkedListUser<string> listaUser = LinkedListUser<string>();
-SaveJson data = SaveJson();
+//SaveJson data = SaveJson();
 MusicManager manager = MusicManager();
-json jsonUser;
-json songs;
+//json jsonUser;
+//json songs;
 
 Hash hash1 = Hash();
 Controller controller = Controller();
@@ -48,6 +48,11 @@ void archivoBakcUp(json jsonUser){
  * Inicializa el servidor
  */
 void Servidor::iniciar() {
+    vector<string> listaUsuario = m.listUser();
+    for (string user : listaUsuario){
+        vector<string> usuario = m.searchUser(user);
+        listaUser.addLast(usuario[4],usuario[2],"",usuario[1],usuario[0],usuario[3],"");
+    }
     sock = socket(AF_INET, SOCK_STREAM, 0);
     if (sock == -1) {
         printf("Error: No se puede crear el socket");
@@ -157,13 +162,18 @@ void *Servidor::hiloConexion(void *socket) {
 
 
                 manager.addNewSong(nombreCancion);
-                /*manager.encoder(crudoCancion, nombreCancion);*/
-                songs = {{"Nombre", nombreCancion},
-                         {"genero", generoCancion},
-                         {"año",    anoCancion},
-                         {"Album",  albumCancion},
-                         {"Letra",  letraCancion},
-                         {"crude",  crudoCancion}};
+                manager.modifySong(nombreCancion,"artist","");
+                manager.modifySong(nombreCancion,"genre",generoCancion);
+                manager.modifySong(nombreCancion,"year",anoCancion);
+                manager.modifySong(nombreCancion,"album",albumCancion);
+                manager.modifySong(nombreCancion,"lyric",letraCancion);
+                manager.encoder(crudoCancion, nombreCancion);
+//                songs = {{"Nombre", nombreCancion},
+//                         {"genero", generoCancion},
+//                         {"año",    anoCancion},
+//                         {"Album",  albumCancion},
+//                         {"Letra",  letraCancion},
+//                         {"crude",  crudoCancion}};
                 manager.saveSongs();
                 string data = "true\n";
                 write(sockPtr, data.c_str(), data.length());
@@ -185,7 +195,7 @@ void *Servidor::hiloConexion(void *socket) {
 
                     string datoUser = "true\n";
                     write(sockPtr, datoUser.c_str(), datoUser.length());
-                    jsonUser.clear();
+//                    jsonUser.clear();
                 } else {
                     string datoUser = "false\n";
                     write(sockPtr, datoUser.c_str(), datoUser.length());

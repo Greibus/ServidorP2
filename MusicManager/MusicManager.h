@@ -67,7 +67,7 @@ public:
 
     void getSong(std::string name);
 
-    std::string encoder(std::string b64file, std::string name);
+    void encoder(std::string b64file, std::string name);
 
     void saveSongs();
 
