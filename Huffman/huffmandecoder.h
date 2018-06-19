@@ -77,6 +77,8 @@ public:
 
     string Decode(string toDecode);
 
+    string datareload(int a);
+
 
     void xmlToCodes(string xmlString);
 

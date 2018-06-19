@@ -26,11 +26,11 @@ public:
         const char *homedir = pw->pw_dir;
         string name = homedir;
         name.append("/RAID5");
-        string da = name + "/Disk 1";
+        string da = name + "/Disco 1";
         mkdir(da.c_str(), 0777);
-        da = name + "/Disk 2";
+        da = name + "/Disco 2";
         mkdir(da.c_str(), 0777);
-        da = name + "/Disk 3";
+        da = name + "/Disco 3";
         mkdir(da.c_str(), 0777);
 
     }
@@ -44,14 +44,14 @@ public:
         string da;
 
         if(disk==1){
-            da = name + "/Disk 1";
+            da = name + "/Disco 1";
             mkdir(da.c_str(), 0777);
         }
         else if(disk==2){
-            da = name + "/Disk 2";
+            da = name + "/Disco 2";
             mkdir(da.c_str(), 0777);}
         else{
-            da = name + "/Disk 3";
+            da = name + "/Disco 3";
             mkdir(da.c_str(), 0777);}
     }
 

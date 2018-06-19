@@ -18,7 +18,7 @@ void MusicManager::init() {
         std::string name = songjson["name"];
         std::string path = songjson["path"];
         std::string genre = songjson["genre"];
-        int rate = songjson["rate"];
+        float rate = songjson["rate"];
         int year = songjson["year"];
         std::string album = songjson["album"];
         std::string artist = songjson["artist"];
@@ -78,7 +78,7 @@ void MusicManager::modifySong(std::string name, std::string type, std::string va
     makeTree();
 }
 
-void MusicManager::rateSong(int rate, std::string name) {
+void MusicManager::rateSong(float rate, std::string name) {
     for (int i = 0; i < songs->getCount(); i++ ) {
 
         if (songs->getIn(i)->getSongName() == name) {
@@ -191,17 +191,10 @@ void MusicManager::getSong(std::string name) {
             decoder = new Decoder();
             decoder->decode(songs->getIn(i)->getPath());
             playingSong = songs->getIn(i);
-            totalBytes = decoder->totalBytes;
-            m_bits = decoder->bits;
-            m_rate = decoder->rate;
-            m_channels = decoder->channels;
-            m_buffer = decoder->buffer_size;
-
         } else {
             //cancion no econtrada;
         }
     }
-
 }
 
 char *MusicManager::getPage() {

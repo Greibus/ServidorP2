@@ -4,11 +4,16 @@
 
 #include "XmlParser.h"
 
-template <typename T> std::string tostr(const T& t) {
-    std::ostringstream os;
-    os<<t;
-    return os.str();
-}
+//xml_document<> XmlParser::xmlRead(std::string str) {
+//    xml_document<> doc;
+//    char* cstr = new char[str.size() + 1];  // Create char buffer to store string copy
+//    strcpy (cstr, str.c_str());             // Copy string into char buffer
+//    doc.parse<0>(cstr);                     // Pass the non-const char* to parse()
+//    // Do stuff with parsing
+//
+//    return doc;
+//    delete [] cstr;  // free buffer memory when all is finished
+//}
 
 std::string XmlParser::xmlWrite(LinkedList<Song *> *list, int low, int high) {
     xml_document<> doc;
@@ -47,8 +52,8 @@ std::string XmlParser::xmlWrite(LinkedList<Song *> *list, int low, int high) {
         artist->value(actual->getArtist().c_str());
         album->value(actual->getAlbum().c_str());
         genre->value(actual->getGenre().c_str());
-        rate->value(tostr(actual->getRate()).c_str());
-        year->value(tostr(actual->getYear()).c_str());
+        rate->value(std::to_string(actual->getRate()).c_str());
+        year->value(std::to_string(actual->getYear()).c_str());
 
         child->append_node(name);
         child->append_node(artist);
@@ -131,6 +136,13 @@ std::string XmlParser::xmlWrite(Song *actual) {
     xml_node<>* rate = doc.allocate_node(node_element, "Rate");
     xml_node<>* year = doc.allocate_node(node_element, "Year");
 
+    name->value(actual->getSongName().c_str());
+    artist->value(actual->getArtist().c_str());
+    album->value(actual->getAlbum().c_str());
+    genre->value(actual->getGenre().c_str());
+    rate->value(std::to_string(actual->getRate()).c_str());
+    year->value(std::to_string(actual->getYear()).c_str());
+
     child->append_node(name);
     child->append_node(artist);
     child->append_node(album);
@@ -146,7 +158,7 @@ std::string XmlParser::xmlWrite(Song *actual) {
 }
 
 std::string XmlParser::xmlWrite(char *buffering, int totalBytes, int bits,
-                                long rate, int channels, size_t buffer) {
+                                long rate, int channels, int buffer) {
     xml_document<> doc;
     xml_node<>* decl = doc.allocate_node(node_declaration);
     decl->append_attribute(doc.allocate_attribute("version", "1.0"));

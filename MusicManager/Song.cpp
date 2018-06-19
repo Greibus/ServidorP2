@@ -36,11 +36,11 @@ void Song::setLyrics(const std::string &lyrics) {
     Song::lyrics = lyrics;
 }
 
-int Song::getRate() const {
+float Song::getRate() const {
     return rate;
 }
 
-void Song::setRate(int rate) {
+void Song::setRate(float rate) {
     Song::rate = rate;
 }
 

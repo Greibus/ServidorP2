@@ -2,19 +2,14 @@
 #include <iostream>
 #include <fstream>
 #include <vector>
-#include <string>
 #include "Server/Servidor.h"
 #include <rapidxml/rapidxml.hpp>
-#include <rapidxml/rapidxml_print.hpp>
 
 #include "XML/XmlParser.h"
 #include "MusicManager/MusicManager.h"
 #include "MusicManager/Song.h"
 #include "UserData/Hash.h"
 #include "MySQL/meinSQL.h"
-
-using namespace std;
-using namespace rapidxml;
 
 int main(){
 
@@ -87,4 +82,5 @@ int main(){
 
 
     return 0;
+
 }

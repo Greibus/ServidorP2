@@ -185,14 +185,14 @@ string* File::filePath(int disc) {
     homedirectory.append("/RAID5");
 
     if( disc == 1 ) {
-        homedirectory.append("/Disk 1");
+        homedirectory.append("/Disco 1");
         string data = homedirectory.c_str();
         return new string(homedirectory.c_str());
     }
     if ( disc == 2 ) {
-        homedirectory.append("/Disk 2");
+        homedirectory.append("/Disco 2");
     } else {
-        homedirectory.append("/Disk 3");
+        homedirectory.append("/Disco 3");
     }
 
     return new string(homedirectory.c_str());
@@ -367,13 +367,13 @@ bool File::existFile(char *filename, int number) {
     std::string nameString = filename;
     std::string nameStrinPrueba = name;
     if(number == 1) {
-        homedirectory.append("/RAID5/Disk 1/");
+        homedirectory.append("/RAID5/Disco 1/");
         homedirectory.append(nameString);
     } else if(number == 2){
-        homedirectory.append("/RAID5/Disk 2/");
+        homedirectory.append("/RAID5/Disco 2/");
         homedirectory.append(nameString);
     } else if (number == 3){
-        homedirectory.append("/RAID5/Disk 3/");
+        homedirectory.append("/RAID5/Disco 3/");
         homedirectory.append(nameString);
     }
 
