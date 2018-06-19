@@ -4,12 +4,6 @@
 
 #include "MusicManager.h"
 
-template <typename T> std::string tostr(const T& t) {
-    std::ostringstream os;
-    os<<t;
-    return os.str();
-}
-
 void MusicManager::init() {
     int counter = 0;
     json json1 = saveJson.getInFile(1);
@@ -78,7 +72,7 @@ void MusicManager::modifySong(std::string name, std::string type, std::string va
     makeTree();
 }
 
-void MusicManager::rateSong(float rate, std::string name) {
+void MusicManager::rateSong(int rate, std::string name) {
     for (int i = 0; i < songs->getCount(); i++ ) {
 
         if (songs->getIn(i)->getSongName() == name) {
@@ -100,7 +94,7 @@ void MusicManager::deleteSong(std::string name) {
             //cancion no econtrada;
         }
     }
-    m.delSong(name);
+    saveSongs();
     makeTree();
 }
 
@@ -123,26 +117,20 @@ LinkedList<Song*>* MusicManager::getByArtirst() {
 }
 
 void MusicManager::saveSongs() {
-    Song* song;
-//    json array;
+    json array;
     for (int i = 0; i<songs->getCount(); i++){
-//        json json1;
-        song = songs->getIn(i);
-//        json1["name"] = songs->getIn(i)->getSongName();
-//        json1["artist"] = songs->getIn(i)->getArtist();
-//        json1["album"] = songs->getIn(i)->getAlbum();
-//        json1["path"] = songs->getIn(i)->getPath();
-//        json1["genre"] = songs->getIn(i)->getGenre();
-//        json1["year"] = songs->getIn(i)->getYear();
-//        json1["rate"] = songs->getIn(i)->getRate();
-//        json1["lyric"] = songs->getIn(i)->getLyrics();
-//        array.push_back(json1);
-        if (m.searchSong(song->getSongName()).size() == 0) {
-            m.addSong(song->getAlbum(), song->getArtist(), song->getGenre(), song->getLyrics(),
-                      song->getSongName(), song->getPath(), tostr(song->getRate()), tostr(song->getYear()));
-        }
+        json json1;
+        json1["name"] = songs->getIn(i)->getSongName();
+        json1["artist"] = songs->getIn(i)->getArtist();
+        json1["album"] = songs->getIn(i)->getAlbum();
+        json1["path"] = songs->getIn(i)->getPath();
+        json1["genre"] = songs->getIn(i)->getGenre();
+        json1["year"] = songs->getIn(i)->getYear();
+        json1["rate"] = songs->getIn(i)->getRate();
+        json1["lyric"] = songs->getIn(i)->getLyrics();
+        array.push_back(json1);
     }
-//    saveJson.saveInFile(1,array);
+    saveJson.saveInFile(1,array);
 }
 
 Song* MusicManager::search(std::string type, std::string value) {
@@ -187,6 +175,12 @@ void MusicManager::getSong(std::string name) {
             decoder = new Decoder();
             decoder->decode(songs->getIn(i)->getPath());
             playingSong = songs->getIn(i);
+
+            totalBytes = decoder->totalBytes;
+            m_bits = decoder->bits;
+            m_rate = decoder->rate;
+            m_channels = decoder->channels;
+            m_buffer = decoder->buffer_size;
         } else {
             //cancion no econtrada;
         }

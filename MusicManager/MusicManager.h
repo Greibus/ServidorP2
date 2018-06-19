@@ -18,7 +18,7 @@
 #include <string>
 #include "../Json/SaveJson.h"
 #include "Decoder.h"
-#include "../MySQL/meinSQL.h"
+#include "../MusicManager/MusicManager.h"
 
 using json = nlohmann::json;
 using base64 = cppcodec::base64_rfc4648;
@@ -29,13 +29,11 @@ private:
     QuickSortA artistSort;
     BubbleSort albumSort;
 
-    Decoder *decoder;
+    Decoder *decoder = nullptr;
 
     base64 base;
     SaveJson saveJson;
     LinkedList<Song*> *songs = new LinkedList<Song*>();
-
-    meinSQL m;
 
 //    BTree<Song*> *names2 = new BTree<Song*>();
 //    AVLTree<Song*> *artists2 = new AVLTree<Song*>();
@@ -46,18 +44,20 @@ private:
 
     void makeTree();
 
+    Song *playingSong = nullptr;
+
 public:
     int totalBytes;
     int m_bits;
     long m_rate;
     int m_channels;
-    size_t m_buffer = 0;
+    size_t m_buffer;
 
     void init();
 
     std::string addNewSong(std::string name);
     void modifySong(std::string name, std::string type, std::string valor);
-    void rateSong(float rate, std::string name);
+    void rateSong(int rate, std::string name);
     void deleteSong(std::string name);
     Song *search(std::string, std::string);
 

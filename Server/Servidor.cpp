@@ -12,15 +12,14 @@
 #include "../Raid5/Controller/Controller.h"
 #include "../Huffman/huffmandecoder.h"
 #include "../Raid5/File/File.h"
-#include "../MySQL/meinSQL.h"
 
 using namespace std;
 string prueba = "";
 LinkedListUser<string> listaUser = LinkedListUser<string>();
-//SaveJson data = SaveJson();
-MusicManager manager = MusicManager();
-//json jsonUser;
-//json songs;
+SaveJson data = SaveJson();
+MusicManager *manager = new MusicManager();
+json jsonUser;
+json songs;
 
 Hash hash1 = Hash();
 Controller controller = Controller();
@@ -48,6 +47,7 @@ void archivoBakcUp(json jsonUser){
  * Inicializa el servidor
  */
 void Servidor::iniciar() {
+    manager->init();
     vector<string> listaUsuario = m.listUser();
     for (string user : listaUsuario){
         vector<string> usuario = m.searchUser(user);
@@ -161,20 +161,20 @@ void *Servidor::hiloConexion(void *socket) {
                 }
 
 
-                manager.addNewSong(nombreCancion);
-                manager.modifySong(nombreCancion,"artist","");
-                manager.modifySong(nombreCancion,"genre",generoCancion);
-                manager.modifySong(nombreCancion,"year",anoCancion);
-                manager.modifySong(nombreCancion,"album",albumCancion);
-                manager.modifySong(nombreCancion,"lyric",letraCancion);
-                manager.encoder(crudoCancion, nombreCancion);
+                manager->addNewSong(nombreCancion);
+                manager->modifySong(nombreCancion,"artist","");
+                manager->modifySong(nombreCancion,"genre",generoCancion);
+                manager->modifySong(nombreCancion,"year",anoCancion);
+                manager->modifySong(nombreCancion,"album",albumCancion);
+                manager->modifySong(nombreCancion,"lyric",letraCancion);
+                manager->encoder(crudoCancion, nombreCancion);
 //                songs = {{"Nombre", nombreCancion},
 //                         {"genero", generoCancion},
 //                         {"año",    anoCancion},
 //                         {"Album",  albumCancion},
 //                         {"Letra",  letraCancion},
 //                         {"crude",  crudoCancion}};
-                manager.saveSongs();
+                manager->saveSongs();
                 string data = "true\n";
                 write(sockPtr, data.c_str(), data.length());
                 //data.saveInFile(1, songs);
@@ -187,12 +187,9 @@ void *Servidor::hiloConexion(void *socket) {
                     string name = doc.first_node()->first_node()->first_attribute()->next_attribute()->next_attribute()->value();
                     string password = doc.first_node()->first_node()->first_attribute()->next_attribute()->next_attribute()->next_attribute()->value();
                     listaUser.addLast(user, name, "", age, genders, hash1.hash(password), "");
-                    m.addUser(genders,age,name,hash1.hash(password),user);
-//                    json
-//                    jsonUser.push_back(listaUser.toJson());
-//                    data.saveInFile(0, jsonUser);
-//                    cout << "JSON USER ES " << jsonUser << endl;
-
+                    jsonUser.push_back(listaUser.toJson());
+                    data.saveInFile(0, jsonUser);
+                    cout << "JSON USER ES " << jsonUser << endl;
                     string datoUser = "true\n";
                     write(sockPtr, datoUser.c_str(), datoUser.length());
 //                    jsonUser.clear();

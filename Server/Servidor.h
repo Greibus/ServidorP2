@@ -15,7 +15,9 @@
 #include <stdlib.h>
 #include <string>
 #include <pthread.h>
-#include "../Json/SaveJson.h"
+//#include "../Json/SaveJson.h"
+#include "../MusicManager/MusicManager.h"
+#include "../MySQL/meinSQL.h"
 
 static char delimitador = '*';
 
