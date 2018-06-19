@@ -15,6 +15,8 @@
 #include "../Trees/LinkedList.h"
 #include "../MusicManager/Song.h"
 
+//#include "../PugiXML/pugixml.hpp"
+
 using namespace rapidxml;
 
 class XmlParser {

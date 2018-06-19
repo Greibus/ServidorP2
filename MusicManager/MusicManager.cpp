@@ -4,6 +4,12 @@
 
 #include "MusicManager.h"
 
+template <typename T> std::string tostr(const T& t) {
+    std::ostringstream os;
+    os<<t;
+    return os.str();
+}
+
 void MusicManager::init() {
     int counter = 0;
     json json1 = saveJson.getInFile(1);
@@ -94,7 +100,7 @@ void MusicManager::deleteSong(std::string name) {
             //cancion no econtrada;
         }
     }
-    saveSongs();
+    m.delSong(name);
     makeTree();
 }
 
@@ -117,20 +123,26 @@ LinkedList<Song*>* MusicManager::getByArtirst() {
 }
 
 void MusicManager::saveSongs() {
-    json array;
+    Song* song;
+//    json array;
     for (int i = 0; i<songs->getCount(); i++){
-        json json1;
-        json1["name"] = songs->getIn(i)->getSongName();
-        json1["artist"] = songs->getIn(i)->getArtist();
-        json1["album"] = songs->getIn(i)->getAlbum();
-        json1["path"] = songs->getIn(i)->getPath();
-        json1["genre"] = songs->getIn(i)->getGenre();
-        json1["year"] = songs->getIn(i)->getYear();
-        json1["rate"] = songs->getIn(i)->getRate();
-        json1["lyric"] = songs->getIn(i)->getLyrics();
-        array.push_back(json1);
+//        json json1;
+        song = songs->getIn(i);
+//        json1["name"] = songs->getIn(i)->getSongName();
+//        json1["artist"] = songs->getIn(i)->getArtist();
+//        json1["album"] = songs->getIn(i)->getAlbum();
+//        json1["path"] = songs->getIn(i)->getPath();
+//        json1["genre"] = songs->getIn(i)->getGenre();
+//        json1["year"] = songs->getIn(i)->getYear();
+//        json1["rate"] = songs->getIn(i)->getRate();
+//        json1["lyric"] = songs->getIn(i)->getLyrics();
+//        array.push_back(json1);
+        if (m.searchSong(song->getSongName()).size() == 0) {
+            m.addSong(song->getAlbum(), song->getArtist(), song->getGenre(), song->getLyrics(),
+                      song->getSongName(), song->getPath(), tostr(song->getRate()), tostr(song->getYear()));
+        }
     }
-    saveJson.saveInFile(1,array);
+//    saveJson.saveInFile(1,array);
 }
 
 Song* MusicManager::search(std::string type, std::string value) {

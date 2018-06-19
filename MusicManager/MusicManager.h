@@ -18,6 +18,7 @@
 #include <string>
 #include "../Json/SaveJson.h"
 #include "Decoder.h"
+#include "../MySQL/meinSQL.h"
 
 using json = nlohmann::json;
 using base64 = cppcodec::base64_rfc4648;
@@ -35,6 +36,8 @@ private:
     SaveJson saveJson;
     LinkedList<Song*> *songs = new LinkedList<Song*>();
 
+    meinSQL m;
+
 //    BTree<Song*> *names2 = new BTree<Song*>();
 //    AVLTree<Song*> *artists2 = new AVLTree<Song*>();
 
@@ -49,7 +52,7 @@ public:
     int m_bits;
     long m_rate;
     int m_channels;
-    size_t m_buffer;
+    size_t m_buffer = 0;
 
     Song *playingSong = nullptr;
 

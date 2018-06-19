@@ -12,6 +12,7 @@
 #include "../Raid5/Controller/Controller.h"
 #include "../Huffman/huffmandecoder.h"
 #include "../Raid5/File/File.h"
+#include "../MySQL/meinSQL.h"
 
 using namespace std;
 string prueba = "";
@@ -26,6 +27,7 @@ File file1 = File();
 HuffmanDecoder huffDecoder = HuffmanDecoder();
 bool arbol = false;
 string userConnected;
+meinSQL m;
 
 bool path1Bool = false;
 bool path2Bool = false;
@@ -182,9 +184,12 @@ void *Servidor::hiloConexion(void *socket) {
                     string name = doc.first_node()->first_node()->first_attribute()->next_attribute()->next_attribute()->value();
                     string password = doc.first_node()->first_node()->first_attribute()->next_attribute()->next_attribute()->next_attribute()->value();
                     listaUser.addLast(user, name, "", age, genders, hash1.hash(password), "");
-                    jsonUser.push_back(listaUser.toJson());
-                    data.saveInFile(0, jsonUser);
-                    cout << "JSON USER ES " << jsonUser << endl;
+                    m.addUser(genders,age,name,hash1.hash(password),user);
+//                    json
+//                    jsonUser.push_back(listaUser.toJson());
+//                    data.saveInFile(0, jsonUser);
+//                    cout << "JSON USER ES " << jsonUser << endl;
+
                     string datoUser = "true\n";
                     write(sockPtr, datoUser.c_str(), datoUser.length());
                     jsonUser.clear();

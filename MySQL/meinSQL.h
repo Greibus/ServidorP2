@@ -8,6 +8,9 @@
 #include <stdlib.h>
 #include <iostream>
 #include <sstream>
+#include <vector>
+#include <cstring>
+#include <random>
 
 #include "mysql_connection.h"
 #include <cppconn/driver.h>
@@ -38,11 +41,22 @@ public:
     void addSong(string album, string artist, string genre, string lyric, string nombreCancion, string path, string rate, string fecha);
     void addUser(string generoFavorito, string age, string nombreUsuario, string contrasena, string usuario);
     void modSong(string nombreCancion, string editar, string nuevoValor);
+    void modUser(string usuario, string editar, string nuevoValor);
 
     void delSong(string nombreCancion);
     void delUser(string usuario);
+    void delAmigo(string usuario, string amigo);
 
-    
+    string searchLetra(string parteLetra);
+    vector <string> searchSong(string nombreCancion);
+    vector <string> searchUser(string usuario);
+
+    vector <string> listUser();
+    vector <string> listSong();
+
+    string recommendFriend(string usuario);
+
+
 };
 
 
