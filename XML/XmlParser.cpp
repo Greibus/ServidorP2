@@ -128,7 +128,7 @@ std::string XmlParser::xmlWrite(char *buffering, int totalBytes, int bits,
     xml_node<>* buff = doc.allocate_node(node_element, "Buffer");
 
     totalB->value(tostr(totalBytes).c_str(),tostr(totalBytes).size());
-    std::cout<<tostr(totalBytes).c_str()<<std::endl;
+//    std::cout<<tostr(totalBytes).c_str()<<std::endl;
     bit->value(tostr(bits).c_str());
     rateN->value(tostr(rate).c_str());
     channel->value(tostr(channels).c_str());
@@ -147,7 +147,8 @@ std::string XmlParser::xmlWrite(char *buffering, int totalBytes, int bits,
     xml_node<>* page = doc.allocate_node(node_element, "Page");
 
     name->value("hola");
-//    page->value(const_cast<char*>(reinterpret_cast<short*>(buffering)),buffer*2);
+//    auto buffered = reinterpret_cast<short*>(buffering);
+//    page->
 
     child->append_node(name);
     child->append_node(page);

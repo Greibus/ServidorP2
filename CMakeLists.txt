@@ -133,7 +133,9 @@ set(SOURCES
         Huffman/huffmandecoder.cpp
         Huffman/pugiconfig.hpp
         Huffman/pugixml.cpp
-        Huffman/pugixml.hpp)
+        Huffman/pugixml.hpp
+        MySQL/meinSQL.h
+        MySQL/meinSQL.cpp)
 
 
 #Se conecta con la libreria de mpg123
@@ -145,3 +147,4 @@ add_executable(${CMAKE_PROJECT_NAME} ${SOURCES})
 
 #link librerias libmpg123
 TARGET_LINK_LIBRARIES(ServidorP2 ${MPG123_LIBRARIES})
+target_link_libraries(ServidorP2 mysqlcppconn)

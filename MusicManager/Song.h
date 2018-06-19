@@ -15,8 +15,8 @@ private:
     std::string lyrics;
     std::string path;
     std::string genre;
-    int rate;
-    int year;
+    int rate = 0;
+    int year = 0;
 
 public:
     explicit Song (std::string name);

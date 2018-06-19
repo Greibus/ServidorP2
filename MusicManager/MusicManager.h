@@ -5,7 +5,7 @@
 #ifndef SERVIDORP2_SONGMANAGER_H
 #define SERVIDORP2_SONGMANAGER_H
 
-#include <cppcodec/base32_rfc4648.hpp>
+#include <cppcodec/base64_default_rfc4648.hpp>
 #include "../Trees/BTree.h"
 #include "../Trees/AVLTree.h"
 #include "../Sort/BubbleSort.h"
@@ -20,7 +20,7 @@
 #include "Decoder.h"
 
 using json = nlohmann::json;
-using base64 = cppcodec::base32_rfc4648;
+using base64 = cppcodec::base64_rfc4648;
 
 class MusicManager {
 private:
