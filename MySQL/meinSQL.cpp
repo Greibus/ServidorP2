@@ -1,4 +1,3 @@
-
 #include "meinSQL.h"
 
 meinSQL::meinSQL()
