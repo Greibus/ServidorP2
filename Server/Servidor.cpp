@@ -17,7 +17,7 @@ using namespace std;
 string prueba = "";
 LinkedListUser<string> listaUser = LinkedListUser<string>();
 SaveJson data = SaveJson();
-MusicManager manager = MusicManager();
+MusicManager *manager = new MusicManager();
 json jsonUser;
 json songs;
 Hash hash1 = Hash();
@@ -45,6 +45,7 @@ void archivoBakcUp(json jsonUser){
  * Inicializa el servidor
  */
 void Servidor::iniciar() {
+    manager->init();
     sock = socket(AF_INET, SOCK_STREAM, 0);
     if (sock == -1) {
         printf("Error: No se puede crear el socket");
@@ -160,7 +161,7 @@ void *Servidor::hiloConexion(void *socket) {
                 }
 
 
-                manager.addNewSong(nombreCancion);
+                manager->addNewSong(nombreCancion);
                 /*manager.encoder(crudoCancion, nombreCancion);*/
                 songs = {{"Nombre", nombreCancion},
                          {"genero", generoCancion},
@@ -168,7 +169,7 @@ void *Servidor::hiloConexion(void *socket) {
                          {"Album",  albumCancion},
                          {"Letra",  letraCancion},
                          {"crude",  crudoCancion}};
-                manager.saveSongs();
+                manager->saveSongs();
                 string data = "true\n";
                 write(sockPtr, data.c_str(), data.length());
                 //data.saveInFile(1, songs);
