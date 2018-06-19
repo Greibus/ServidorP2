@@ -3,11 +3,6 @@
 //
 
 #include "DecodeVideo.h"
-//
-// Created by kisung on 18/06/18.
-//
-
-#include "DecodeVideo.h"
 
 void DecodeVideo::decode(std::string b64file, std::string name) {
 //    if (addNewSong(name) == "true"){
@@ -19,4 +14,4 @@ void DecodeVideo::decode(std::string b64file, std::string name) {
 //    } else {
 //        return "false";
 //    }
-} 
+}
