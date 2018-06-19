@@ -36,11 +36,11 @@ void Song::setLyrics(const std::string &lyrics) {
     Song::lyrics = lyrics;
 }
 
-int Song::getRate() const {
+const std::string &Song::getRate() const {
     return rate;
 }
 
-void Song::setRate(int rate) {
+void Song::setRate(const std::string &rate) {
     Song::rate = rate;
 }
 
@@ -60,11 +60,11 @@ void Song::setGenre(const std::string &genre) {
     Song::genre = genre;
 }
 
-int Song::getYear() const {
+const std::string &Song::getYear() const {
     return year;
 }
 
-void Song::setYear(int year) {
+void Song::setYear( std::string year) {
     Song::year = year;
 }
 
@@ -73,7 +73,7 @@ Song::Song(std::string name) {
 }
 
 Song::Song(std::string name, std::string artist, std::string album, std::string genre,
-           std::string path, int year) {
+           std::string path, std::string year) {
     this->songName = name;
     this->artist = artist;
     this->album = album;

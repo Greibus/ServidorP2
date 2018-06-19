@@ -14,19 +14,19 @@ private:
     std::string album;
     std::string lyrics;
     std::string path;
-    std::string genre;
-    int rate = 0;
-    int year = 0;
+    std::string genre ;
+    std::string rate ;
+    std::string year;
 
 public:
     explicit Song (std::string name);
 
     explicit Song (std::string name, std::string artist, std::string album, std::string genre,
-                   std::string path, int year);
+                   std::string path, std::string year);
 
-    int getYear() const;
+    const std::string &getYear() const;
 
-    void setYear(int year);
+    void setYear(std::string year);
 
     const std::string &getGenre() const;
 
@@ -36,9 +36,9 @@ public:
 
     void setPath(const std::string &path);
 
-    int getRate() const;
+    const std::string &getRate() const;
 
-    void setRate(int rate);
+    void setRate(const std::string &rate);
 
     const std::string &getSongName() const;
 

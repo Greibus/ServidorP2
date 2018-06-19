@@ -16,10 +16,10 @@
 using namespace std;
 string prueba = "";
 LinkedListUser<string> listaUser = LinkedListUser<string>();
-SaveJson data = SaveJson();
+//SaveJson data = SaveJson();
 MusicManager *manager = new MusicManager();
-json jsonUser;
-json songs;
+//json jsonUser;
+//json songs;
 
 Hash hash1 = Hash();
 Controller controller = Controller();
@@ -47,7 +47,7 @@ void archivoBakcUp(json jsonUser){
  * Inicializa el servidor
  */
 void Servidor::iniciar() {
-    manager->init();
+//    manager->init();
     vector<string> listaUsuario = m.listUser();
     for (string user : listaUsuario){
         vector<string> usuario = m.searchUser(user);
@@ -187,9 +187,12 @@ void *Servidor::hiloConexion(void *socket) {
                     string name = doc.first_node()->first_node()->first_attribute()->next_attribute()->next_attribute()->value();
                     string password = doc.first_node()->first_node()->first_attribute()->next_attribute()->next_attribute()->next_attribute()->value();
                     listaUser.addLast(user, name, "", age, genders, hash1.hash(password), "");
-                    jsonUser.push_back(listaUser.toJson());
-                    data.saveInFile(0, jsonUser);
-                    cout << "JSON USER ES " << jsonUser << endl;
+
+                    m.addUser(genders,age,name,password,user);
+
+//                    jsonUser.push_back(listaUser.toJson());
+//                    data.saveInFile(0, jsonUser);
+//                    cout << "JSON USER ES " << jsonUser << endl;
                     string datoUser = "true\n";
                     write(sockPtr, datoUser.c_str(), datoUser.length());
 //                    jsonUser.clear();

@@ -16,10 +16,6 @@ private:
     int err;
     mpg123_handle *mh = mpg123_new(NULL, &err);
     unsigned char *buffer;
-    size_t buffer_size;
-    size_t done;
-    int channels, encoding;
-    long rate;
 
     std::string name;
 

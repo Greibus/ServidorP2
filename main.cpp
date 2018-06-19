@@ -9,7 +9,6 @@
 #include "MusicManager/MusicManager.h"
 #include "MusicManager/Song.h"
 #include "UserData/Hash.h"
-#include "MySQL/meinSQL.h"
 
 int main(){
 
@@ -22,11 +21,26 @@ int main(){
 //
 //    XmlParser xmlParser;
 //    std::cout<<xmlParser.xmlWrite(song) << std::endl;
+//
+//    MusicManager *musicManager = new MusicManager();
+//    musicManager->init();
+//    LinkedList<Song*>* list = musicManager->getByName();
+//    for (int i = 0; i < list->getCount(); i++) {
+//        cout<< list->getIn(i)->getSongName() << endl;
+//    }
+//    std::cout<<xmlParser.xmlWrite(musicManager->getByName()) << std::endl;
+//
+//    musicManager->getSong("The House Of The Rising Sun");
+//    std::cout<<xmlParser.xmlWrite(musicManager->getPage(),0,0,0,0,0);
 
+//    std::cout << "Iniciando Servidor" << std::endl;
+//    Servidor servidor = Servidor();
+//    servidor.iniciar();
 //    XmlParser xmlParser;
 //
 //    MusicManager *musicManager = new MusicManager();
 //    musicManager->init();
+////    string hola =xmlParser.xmlWrite(musicManager->getByName());
 //
 //    musicManager->getSong("The House Of The Rising Sun");
 //
@@ -35,8 +49,8 @@ int main(){
 //    string hola = xmlParser.xmlWrite(musicManager->getPage(),musicManager->totalBytes,musicManager->m_bits,
 //                                     musicManager->m_rate,musicManager->m_channels,musicManager->m_buffer);
 //
-//    std::cout<< xmlParser.xmlWrite(musicManager->getByName()) << endl;
-//
+//    std::cout<< hola << endl;
+
 //    xml_document<> doc;
 //    char* cstr = new char[hola.size() + 1];  // Create char buffer to store string copy
 //    strcpy (cstr, hola.c_str());             // Copy string into char buffer
@@ -47,39 +61,6 @@ int main(){
     std::cout << "Iniciando Servidor" << std::endl;
     Servidor servidor = Servidor();
     servidor.iniciar();
-
-//    meinSQL m;
-
-//    m.addSong("Odisea","Ozuna","Reggaeton","Quiero Repetir...","Quiero Repetir","home","20/10","2017");
-//    m.addSong("Unica", "Ozuna", "Reggaeton", "Ella es unica...", "Unica", "home","20/10","2018");
-//    m.addSong("Golden", "Romeao Santos", "Reggaeton", "Bella y sensual, sobre natural...","Bella y Sensual", "home", "10/10", "2017");
-
-//    m.addUser("Reggaeton","20","Jung","123","bakkim");
-//    m.addUser("Rock","20","Ian", "abc","cobjim");
-//    m.addUser("Reggaeton","20","Esteban","zxc","acastillon");
-//    m.addUser("Reggaeton","20", "Roberto","robrob", "robthebob");
-
-    //m.addAmigos("BEELZEBUB", "BELIAL");
-//    m.delAmigo("BELIAL","BEELZEBUB");
-//    m.modSong("Unica", "album", "Unica");
-//    m.modSong("Quiero Repetir", "rate", "20/20");
-
-//    m.delSong("Quiero Repetir");
-//    m.delUser("bakkim");
-
-
-    //cout << m.searchLetra("sens");
-    //cout << m.searchSong("Quiero Repetir")[0];
-
-    //cout << m.searchUser("bakkim")[1];
-
-//    cout << m.recommendFriend("bakkim");
-//    vector<string> ha = m.searchSong("Quiero Repetir");
-//
-//    cout<< ha.size();
-//    m.modUser("robthebob","generoFavorito","Reggaeton");
-//    m.modUser("acastillon","generoFavorito", "Reggaeton");
-
 
     return 0;
 

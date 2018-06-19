@@ -19,6 +19,7 @@
 #include "../Json/SaveJson.h"
 #include "Decoder.h"
 #include "../MusicManager/MusicManager.h"
+#include "../MySQL/meinSQL.h"
 
 using json = nlohmann::json;
 using base64 = cppcodec::base64_rfc4648;
@@ -28,6 +29,8 @@ private:
     QuickSort nameSort;
     QuickSortA artistSort;
     BubbleSort albumSort;
+
+    meinSQL m;
 
     Decoder *decoder = nullptr;
 
@@ -57,7 +60,7 @@ public:
 
     std::string addNewSong(std::string name);
     void modifySong(std::string name, std::string type, std::string valor);
-    void rateSong(int rate, std::string name);
+    void rateSong(std::string rate, std::string name);
     void deleteSong(std::string name);
     Song *search(std::string, std::string);
 

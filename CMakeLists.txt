@@ -135,7 +135,7 @@ set(SOURCES
         Huffman/pugixml.cpp
         Huffman/pugixml.hpp
         MySQL/meinSQL.h
-        MySQL/meinSQL.cpp Video/DecodeVideo.cpp Video/DecodeVideo.h)
+        MySQL/meinSQL.cpp)
 
 
 #Se conecta con la libreria de mpg123
